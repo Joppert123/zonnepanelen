@@ -31,8 +31,8 @@ void uart_init()
 
 void serial_write(unsigned char data)
 {
-	loop_until_bit_is_set(UCSR0A, UDRE0);									// UDRE is set when the transmit buffer is empty
-	UDR0 = data;															// Writing data
+	while(!(UCSR0A & (1<<UDRE0)));
+	UDR0 = data;
 }
 
 void serial_writeln(char* string)
@@ -52,17 +52,16 @@ unsigned char serial_read(void)
 	return UDR0;
 }
 
-void serial_readln(char *data, char size) 
+void serial_readln(char *data, char size)
 {
 	unsigned char i = 0;
 
 	if (size == 0) return;													// Return if not enough space in buffer
-	
+
 	while (i < size - 1)													// Check for space with NULL at the end
 	{
 		unsigned char c;
 		c = serial_read();
-		
 		if (c == '\0') break;												// Break on null
 		data[i] = c;														// Write into the buffer
 		i++;
@@ -75,9 +74,9 @@ int main()
 {
 	uart_init();
 	_delay_ms(1000);
-	
+
 	char data[200];															// Buffer for commands
-	
+
 	while(1)
 	{
 		serial_readln(data, 200);
