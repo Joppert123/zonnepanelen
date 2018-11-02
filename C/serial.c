@@ -2,9 +2,15 @@
  * serial.c
  *
  * Created: 31/10/2018 13:12:01
- * Author : Group 4
+ * Author : ITV1H - Groep 4
+    ______                         __ __
+  / ____/________  ___  ____     / // /
+ / / __/ ___/ __ \/ _ \/ __ \   / // /_
+/ /_/ / /  / /_/ /  __/ /_/ /  /__  __/
+\____/_/   \____/\___/ .___/     /_/   
+                    /_/            
  *
- */ 
+ */
 
 #include <avr/io.h>
 #include <stdlib.h>
@@ -15,44 +21,54 @@
 
 void uart_init()
 {
-	// Setting baud rate 19.200
-	UBRR0H = 0;
+	UBRR0H = 0;																// Setting baud rate 19.200
 	UBRR0L = 51;
-	// Disabling U2X mode
-	UCSR0A = 0;
-	// Enabling transmitter & receiver
-	UCSR0B = _BV(TXEN0) | _BV(RXEN0);
-	// Setting frame format at asynchronous, 8 data bits, 1 stop bit, no parity
-	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);
-}
-
-void serial_write(uint8_t data)
-{
-	// UDRE is set when the transmit buffer is empty
-	loop_until_bit_is_set(UCSR0A, UDRE0);
 	
-	// Writing data
-	UDR0 = data;
+	UCSR0A = 0;																// Disabling U2X mode
+	UCSR0B = _BV(TXEN0)  | _BV(RXEN0);										// Enabling transmitter & receiver
+	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);										// Setting frame format, 8 data bits, 1 stop bit
 }
 
-void serial_writeln(const char* c)
+void serial_write(unsigned char data)
 {
-	// Writing each character independently
-	for (size_t i = 0; i < strlen(c); i++)
+	loop_until_bit_is_set(UCSR0A, UDRE0);									// UDRE is set when the transmit buffer is empty
+	UDR0 = data;															// Writing data
+}
+
+void serial_writeln(char* string)
+{
+	for (size_t i = 0; i < strlen(string); i++)								// Writing each character independently
 	{
-		serial_write(c[i]);
+		serial_write(string[i]);
 	}
 	
-	// New line and carriage return
-	serial_write(0x0A);
+	serial_write(0x0A);														// New line and carriage return
 	serial_write(0x0D);
 }
 
-int serial_read()
+unsigned char serial_read(void)
 {
-	// Waiting until ready to transmit
-	loop_until_bit_is_set(UCSR0A, RXC0);
+	while(!(UCSR0A & (1<<RXC0)));
 	return UDR0;
+}
+
+void serial_readln(char *data, char size) 
+{
+	unsigned char i = 0;
+
+	if (size == 0) return;													// Return if not enough space in buffer
+	
+	while (i < size - 1)													// Check for space with NULL at the end
+	{
+		unsigned char c;
+		c = serial_read();
+		
+		if (c == '\0') break;												// Break on null
+		data[i] = c;														// Write into the buffer
+		i++;
+	}
+	
+	data[i] = 0;															// String null terminated
 }
 
 int main()
@@ -60,11 +76,12 @@ int main()
 	uart_init();
 	_delay_ms(1000);
 	
-	char test1[] = "Protocol TODO.";
+	char data[200];															// Buffer for commands
 	
 	while(1)
 	{
-		serial_writeln(test1);
-		_delay_ms(1000);
+		serial_readln(data, 200);
+		
+		if (!strcmp(data, "connect")) serial_writeln("CONNECTED");
 	}
 }
