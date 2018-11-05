@@ -13,17 +13,17 @@
  */
 
 #include <avr/io.h>
+#include <stdio.h>
 #include <stdlib.h>
+#include <string.h>
 #include <avr/sfr_defs.h>
 #define F_CPU 16E6
 #include <util/delay.h>
-#include <string.h>
 
 void uart_init()
 {
 	UBRR0H = 0;																// Setting baud rate 19.200
 	UBRR0L = 51;
-	
 	UCSR0A = 0;																// Disabling U2X mode
 	UCSR0B = _BV(TXEN0)  | _BV(RXEN0);										// Enabling transmitter & receiver
 	UCSR0C = _BV(UCSZ01) | _BV(UCSZ00);										// Setting frame format, 8 data bits, 1 stop bit
@@ -70,9 +70,10 @@ void serial_readln(char *data, char size)
 	data[i] = 0;															// String null terminated
 }
 
+/*
 int main()
 {
-	uart_init();
+	uart_init(); // TODO - CREATE SETUP
 	_delay_ms(1000);
 
 	char data[200];															// Buffer for commands
@@ -81,6 +82,7 @@ int main()
 	{
 		serial_readln(data, 200);
 		
-		if (!strcmp(data, "connect")) serial_writeln("CONNECTED");
+		if (!strcmp(data, "connect")) serial_writeln("CONNECTED");	
 	}
 }
+*/
