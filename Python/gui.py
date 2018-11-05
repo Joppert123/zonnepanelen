@@ -1,4 +1,7 @@
+from tkinter import *
 import tkinter as tk
+
+# De klasse Pagina is de hoofdklasse van de verschillende 'pagina's' van de Centrale. Er wordt een frame gemaakt wat elke 'pagina' kan gebruiken.
 
 class Pagina(tk.Frame):
     def __init__(self, args):
@@ -9,9 +12,13 @@ class Pagina(tk.Frame):
 class Algemeen(Pagina):
    def __init__(self, args):
        Pagina.__init__(self, args)
+
+       # Labels voor instellingen, naam en een invulveld voor de naam van de besturingseenheid
        label_instellingen = tk.Label(self, text="Instellingen", font="Verdana 16")
        label_naam = tk.Label(self, text="Naam", font="Verdana 10")
        entry_naam = tk.Entry(self)
+
+       # Het plaatsen van de objecten in het frame
        label_instellingen.place(x=10, y=15)
        label_naam.place(x=10, y=50)
        entry_naam.place(x=60, y=50)
@@ -19,22 +26,53 @@ class Algemeen(Pagina):
 class Temperatuursensor(Pagina):
    def __init__(self, args):
        Pagina.__init__(self, args)
-       label = tk.Label(self, text="This is Pagina 2")
-       aanknop = tk.Button(self, text="Aan", width=10, height=5)
-       aanknop.pack(side="left")
-       label.pack(side="top", fill="both", expand=True)
+
+       # Aan- en uitknop voor het inschakelen van de sensor
+       aanknop = tk.Button(self, text="Aan", background="Green", width=20, height=4)
+       uitknop = tk.Button(self, text="Uit", background="Red", width=20, height=4)
+
+       # Voorlopige invulling van de grafiek, het is nu nog alleen een label maar hier komt later een volledige grafiek met data van de sensor
+       grafiek = tk.Label(self, text="Hier komt de grafiek", font="Verdana 14")
+
+       # Label voor het instellen van de refreshrate van de sensor
+       refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
+
+       # Variabele voor de dropdownbox voor het instellen van de refreshrate van de sensor, momenteel is de functie nog niet geïmplementeerd
+       tkvar = StringVar(root)
+
+       # De verschillende refreshrates die de gebruiker kan kiezen plus de standaardwaarde
+       refresh_opties = ('30 seconden', '40 seconden', '50 seconden', '60 seconden')
+       tkvar.set('30 seconden')
+
+       # Dropdownbox aanmaken
+       popupMenu = OptionMenu(self, tkvar, *refresh_opties)
+
+       # Dropdownbox plaatsen in het frame
+       popupMenu.place(x=800, y=250)
+
+       # Aan- en uitknop plaatsen in het frame
+       aanknop.place(x=50, y=50)
+       uitknop.place(x=225, y=50)
+
+       # Label van dummygrafiek en refreshrate label plaatsen in het frame
+       grafiek.place(x=125, y=400)
+       refreshrate_tekst.place(x=800, y=200)
 
 class Lichtsensor(Pagina):
    def __init__(self, args):
        Pagina.__init__(self, args)
-       label = tk.Label(self, text="This is Pagina 3")
-       label.pack(side="top", fill="both", expand=True)
+       aanknop = tk.Button(self, text="Aan", background="Green", width=20, height=4)
+       uitknop = tk.Button(self, text="Uit", background="Red", width=20, height=4)
+       aanknop.place(x=50, y=50)
+       uitknop.place(x=225, y=50)
 
 class Ultrasonoorsensor(Pagina):
    def __init__(self, args):
        Pagina.__init__(self, args)
-       label = tk.Label(self, text="This is Pagina 4")
-       label.pack(side="top", fill="both", expand=True)
+       aanknop = tk.Button(self, text="Aan", background="Green", width=20, height=4)
+       uitknop = tk.Button(self, text="Uit", background="Red", width=20, height=4)
+       aanknop.place(x=50, y=50)
+       uitknop.place(x=225, y=50)
 
 class Modus(Pagina):
    def __init__(self, args):
