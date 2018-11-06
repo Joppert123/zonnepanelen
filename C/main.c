@@ -13,21 +13,23 @@
  */
 
 #include "serial.h"
+#include "sonar.h"
 #include "scheduler.h"
 #include "protocol.h"
 
 void testing()
 {
-	serial_writeln("Arduino waiting?");
+	serial_writeln("Random task testing!");
 }
 
 void setup()
 {
 	uart_init();								// Initializations
+	sonar_init();
 	sch_init();
 	
 	sch_add_task(testing, 0, 1000);				// Tasks
-	sch_add_task(get_commands, 0, 1);			
+	sch_add_task(get_commands, 0, 1);
 	
 	sch_start();								// Enable interrupts
 }
