@@ -12,6 +12,7 @@
  *
  */
 
+#include "serial.h"
 #include <avr/io.h>
 #include <stdio.h>
 #include <stdlib.h>
@@ -31,7 +32,7 @@ void uart_init()
 
 void serial_write(unsigned char data)
 {
-	while(!(UCSR0A & (1<<UDRE0)));
+	while(!(UCSR0A & (1 << UDRE0)));
 	UDR0 = data;
 }
 
@@ -48,14 +49,16 @@ void serial_writeln(char* string)
 
 unsigned char serial_read(void)
 {
-	while(!(UCSR0A & (1<<RXC0)));
+	while(!(UCSR0A & (1 << RXC0)));
 	return UDR0;
 }
 
 void serial_readln(char *data, char size)
 {
 	unsigned char i = 0;
-
+	
+	if (!(UCSR0A & (1 << RXC0))) return;									// Don't wait for input, only when it happens
+	
 	if (size == 0) return;													// Return if not enough space in buffer
 
 	while (i < size - 1)													// Check for space with NULL at the end
@@ -69,20 +72,3 @@ void serial_readln(char *data, char size)
 	
 	data[i] = 0;															// String null terminated
 }
-
-/*
-int main()
-{
-	uart_init(); // TODO - CREATE SETUP
-	_delay_ms(1000);
-
-	char data[200];															// Buffer for commands
-
-	while(1)
-	{
-		serial_readln(data, 200);
-		
-		if (!strcmp(data, "connect")) serial_writeln("CONNECTED");	
-	}
-}
-*/

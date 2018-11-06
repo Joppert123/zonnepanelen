@@ -161,7 +161,7 @@ unsigned char sch_delete_task(const unsigned char TASK_INDEX)
 
 -*------------------------------------------------------------------*/
 
-void sch_init_t1(void)
+void sch_init(void)
 {
    unsigned char i;
 
@@ -170,11 +170,9 @@ void sch_init_t1(void)
       sch_delete_task(i);
    }
 
-   // Set up Timer 1
-   // Values for 1ms and 10ms ticks are provided for various crystals
-   OCR1A = (uint16_t)625;   				// 10ms = (256/16.000.000) * 625
-   TCCR1B = (1 << CS12) | (1 << WGM12);		// prescale op 64, top counter = value OCR1A (CTC mode)
-   TIMSK1 = 1 << OCIE1A;   					// Timer 1 Output Compare A Match Interrupt Enable
+   OCR1A = (uint16_t)249;						// 1000Hz = 1ms (16.000.000/((249+1)*64))
+   TCCR1B = (1 << CS11)|(1 << CS10)|(1 << WGM12);	// Prescaler 64, CTC mode
+   TIMSK1 = 1 << OCIE1A;   						// Timer 1 Output Compare A Match Interrupt Enable
 }
 
 /*------------------------------------------------------------------*-

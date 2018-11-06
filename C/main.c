@@ -14,20 +14,24 @@
 
 #include "serial.h"
 #include "scheduler.h"
+#include "protocol.h"
 
-void test()
+#include <string.h>
+
+void testing()
 {
-	serial_writeln("Testing scheduler!");
+	serial_writeln("Arduino waiting?");
 }
 
 void setup()
 {
-	uart_init();
-	sch_init_t1();
+	uart_init();								// Initializations
+	sch_init();
 	
-	sch_add_task(test, 0, 100);
+	sch_add_task(testing, 0, 1000);				// Tasks
+	sch_add_task(get_commands, 0, 1);			
 	
-	sch_start();
+	sch_start();								// Enable interrupts
 }
 
 int main()
@@ -36,6 +40,6 @@ int main()
 	
 	while (1)
 	{
-		sch_dispatch_tasks();	
+		sch_dispatch_tasks();
 	}
 }
