@@ -1,6 +1,11 @@
 from tkinter import *
 import tkinter as tk
 
+import matplotlib
+matplotlib.use("TkAgg")
+from matplotlib.backends.backend_tkagg import *
+from matplotlib.figure import *
+
 # De klasse Pagina is de hoofdklasse van de verschillende 'pagina's' van de Centrale. Er wordt een frame gemaakt wat elke 'pagina' kan gebruiken.
 
 class Pagina(tk.Frame):
@@ -67,6 +72,19 @@ class Temperatuursensor(Pagina):
        # Label van dummygrafiek en refreshrate label plaatsen in het frame
        grafiek.place(x=125, y=400)
        refreshrate_tekst.place(x=800, y=200)
+
+       # #grafiek
+       # f = Figure(figsize=(5,5), dpi=100)
+       # a = f.add_subplot(111)
+       # a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+       #
+       # canvas = FigureCanvasTkAgg(f, self)
+       # canvas.show()
+       # canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
+       #
+       # toolbar = NavigationToolbar2TkAgg(canvas, self)
+       # toolbar.update()
+       # canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
 
 class Lichtsensor(Pagina):
    def __init__(self, args):
