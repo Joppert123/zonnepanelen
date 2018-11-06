@@ -14,12 +14,8 @@
 
 #include "serial.h"
 #include <avr/io.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <avr/sfr_defs.h>
-#define F_CPU 16E6
-#include <util/delay.h>
 
 void uart_init()
 {

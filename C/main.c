@@ -16,8 +16,6 @@
 #include "scheduler.h"
 #include "protocol.h"
 
-#include <string.h>
-
 void testing()
 {
 	serial_writeln("Arduino waiting?");

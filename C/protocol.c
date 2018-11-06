@@ -13,7 +13,6 @@
  */
 
 #include "serial.h"
-
 #include <string.h>
 
 void get_commands()
