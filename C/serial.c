@@ -39,8 +39,8 @@ void serial_writeln(char* string)
 		serial_write(string[i]);
 	}
 	
-	serial_write(0x0A);														// New line and carriage return
 	serial_write(0x0D);
+	serial_write(0x0A);														// New line and carriage return
 }
 
 unsigned char serial_read(void)
