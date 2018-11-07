@@ -17,7 +17,7 @@
 #include <string.h>
 #include <avr/sfr_defs.h>
 
-void uart_init()
+void serial_init()
 {
 	UBRR0H = 0;																// Setting baud rate 19.200
 	UBRR0L = 51;

@@ -27,10 +27,10 @@ uint32_t countTimer0 = 0;					// 32-bit counter to save overflows from counter0
 void sonar_init()
 {
 	DDRB |= (1 << PORTB0);					// Initializing HC-SR04 pins
-	DDRB &= ~(1<< PORTB1);
+	DDRB &= ~(1 << PORTB1);
 }
 
-void get_distance()
+uint16_t get_sonar_distance()
 {
 	float distance = 0.0f;
 	uint16_t prevDist = 0.0;
@@ -63,16 +63,13 @@ void get_distance()
 
 	distance = 17013.0 * duration;			// Distance in cm = duration in s * 340.26 * 100 * 1/2
 	
-	if(distance > 400)						// Sensor only works up to 400cm
+	if (distance > 200)						// Sensor only works up to 400cm (Sunscreen is 2m)
 	{
 		distance = prevDist;
 	}
 	
 	uint16_t convert = distance;			// Converting float to int
-	char buffer[5];
-	sprintf(buffer, "%i", convert);
-	serial_writeln(buffer);
-	//return convert;						// TODO: change communication when protocol is done
+	return convert;
 }
 
 ISR(TIMER0_OVF_vect)
@@ -82,7 +79,7 @@ ISR(TIMER0_OVF_vect)
 
 ISR(PCINT0_vect)
 {
-	if(PINB & (1 << PINB1))					// Start timer & overflow interrupt on rising edge
+	if (PINB & (1 << PINB1))					// Start timer & overflow interrupt on rising edge
 	{				
 		TCCR0B |= (1<<CS00);
 		TIMSK0 |= 1<<TOIE0;

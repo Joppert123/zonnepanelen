@@ -1,7 +1,7 @@
 /*
- * serial.h
+ * sunscreen.h
  *
- * Created: 31/10/2018 13:12:01
+ * Created: 07/11/2018 10:48:10
  * Author : ITV2H - Groep 4
     ______                         __ __
   / ____/________  ___  ____     / // /
@@ -12,11 +12,12 @@
  *
  */
 
-#ifndef _serial
-#define _serial
+#ifndef _sunscreen
+#define _sunscreen
 
-void serial_init();
-void serial_writeln(char* string);
-void serial_readln(char *data, char size);
+void sunscreen_init();
+char get_sunscreen_status();
+char sunscreen_extend();
+char sunscreen_retract();
 
 #endif

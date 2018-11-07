@@ -16,27 +16,26 @@
 #include "sonar.h"
 #include "scheduler.h"
 #include "protocol.h"
-
-void testing()
-{
-	serial_writeln("Random task testing!");
-}
+#include "sunscreen.h"
 
 void setup()
 {
-	uart_init();								// Initializations
+	// Initializations
+	serial_init();
 	sonar_init();
+	sunscreen_init();
 	sch_init();
 	
-	sch_add_task(testing, 0, 1000);				// Tasks
+	// Tasks
 	sch_add_task(get_commands, 0, 1);
 	
-	sch_start();								// Enable interrupts
+	// Enable
+	sch_start();
 }
 
 int main()
 {
-	setup();									// Setup of modules
+	setup();
 	
 	while (1)
 	{

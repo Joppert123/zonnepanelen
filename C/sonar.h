@@ -12,10 +12,12 @@
  *
  */
 
+#include <avr/io.h>
+
 #ifndef _sonar
 #define _sonar
 
 void sonar_init();
-void get_distance();
+uint16_t get_sonar_distance();
 
 #endif
