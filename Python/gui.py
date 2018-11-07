@@ -3,8 +3,8 @@ import tkinter as tk
 
 import matplotlib
 matplotlib.use("TkAgg")
-from matplotlib.backends.backend_tkagg import *
-from matplotlib.figure import *
+from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolbar2Tk
+from matplotlib.figure import Figure
 
 # De klasse Pagina is de hoofdklasse van de verschillende 'pagina's' van de Centrale. Er wordt een frame gemaakt wat elke 'pagina' kan gebruiken.
 
@@ -43,9 +43,6 @@ class Temperatuursensor(Pagina):
        aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
        uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
 
-       # Voorlopige invulling van de grafiek, het is nu nog alleen een label maar hier komt later een volledige grafiek met data van de sensor
-       grafiek = tk.Label(self, text="Hier komt de grafiek", font="Verdana 14")
-
        # Label voor het instellen van de refreshrate van de sensor
        refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
 
@@ -59,6 +56,18 @@ class Temperatuursensor(Pagina):
        # Dropdownbox aanmaken
        popupMenu = OptionMenu(self, tkvar, *refresh_opties)
 
+       # Grafiek maken
+       f = Figure(figsize=(5, 5), dpi=100)
+       a = f.add_subplot(111)
+       a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+
+       canvas = FigureCanvasTkAgg(f, self)
+       canvas.draw()
+
+       #Toolbar voor grafiek
+       toolbar = NavigationToolbar2Tk(canvas, self)
+       toolbar.update()
+
        #Plaatsen van het label object in het frame
        label_titel.place(x=10, y=15)
 
@@ -69,22 +78,11 @@ class Temperatuursensor(Pagina):
        aanknop.place(x=50, y=60)
        uitknop.place(x=225, y=60)
 
-       # Label van dummygrafiek en refreshrate label plaatsen in het frame
-       grafiek.place(x=125, y=400)
+       # Refreshrate label plaatsen in het frame
        refreshrate_tekst.place(x=800, y=200)
 
-       # #grafiek
-       # f = Figure(figsize=(5,5), dpi=100)
-       # a = f.add_subplot(111)
-       # a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
-       #
-       # canvas = FigureCanvasTkAgg(f, self)
-       # canvas.show()
-       # canvas.get_tk_widget().pack(side=tk.BOTTOM, fill=tk.BOTH, expand=True)
-       #
-       # toolbar = NavigationToolbar2TkAgg(canvas, self)
-       # toolbar.update()
-       # canvas._tkcanvas.pack(side=tk.TOP, fill=tk.BOTH, expand=True)
+       # Grafiek plaatsen in het frame
+       canvas.get_tk_widget().place(x=50, y=200)
 
 class Lichtsensor(Pagina):
    def __init__(self, args):
@@ -97,8 +95,6 @@ class Lichtsensor(Pagina):
        aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
        uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
 
-       # Voorlopige invulling van de grafiek, het is nu nog alleen een label maar hier komt later een volledige grafiek met data van de sensor
-       grafiek = tk.Label(self, text="Hier komt de grafiek", font="Verdana 14")
 
        # Label voor het instellen van de refreshrate van de sensor
        refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
@@ -113,6 +109,14 @@ class Lichtsensor(Pagina):
        # Dropdownbox aanmaken
        popupMenu = OptionMenu(self, tkvar, *refresh_opties)
 
+       # Grafiek maken
+       f = Figure(figsize=(5, 5), dpi=100)
+       a = f.add_subplot(111)
+       a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+
+       canvas = FigureCanvasTkAgg(f, self)
+       canvas.draw()
+
        # Dropdownbox plaatsen in het frame
        popupMenu.place(x=800, y=250)
 
@@ -123,9 +127,11 @@ class Lichtsensor(Pagina):
        aanknop.place(x=50, y=60)
        uitknop.place(x=225, y=60)
 
-       # Label van dummygrafiek en refreshrate label plaatsen in het frame
-       grafiek.place(x=125, y=400)
+       # Refreshrate label plaatsen in het frame
        refreshrate_tekst.place(x=800, y=200)
+
+       # Grafiek plaatsen in het frame
+       canvas.get_tk_widget().place(x=50, y=200)
 
 class Ultrasonoorsensor(Pagina):
    def __init__(self, args):
@@ -137,9 +143,6 @@ class Ultrasonoorsensor(Pagina):
        # Aan- en uitknop voor het inschakelen van de sensor
        aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
        uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
-
-       # Voorlopige invulling van de grafiek, het is nu nog alleen een label maar hier komt later een volledige grafiek met data van de sensor
-       grafiek = tk.Label(self, text="Hier komt de grafiek", font="Verdana 14")
 
        # Label voor het instellen van de refreshrate van de sensor
        refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
@@ -154,6 +157,14 @@ class Ultrasonoorsensor(Pagina):
        # Dropdownbox aanmaken
        popupMenu = OptionMenu(self, tkvar, *refresh_opties)
 
+       # Grafiek maken
+       f = Figure(figsize=(5, 5), dpi=100)
+       a = f.add_subplot(111)
+       a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+
+       canvas = FigureCanvasTkAgg(f, self)
+       canvas.draw()
+
        # Dropdownbox plaatsen in het frame
        popupMenu.place(x=800, y=250)
 
@@ -164,9 +175,11 @@ class Ultrasonoorsensor(Pagina):
        aanknop.place(x=50, y=60)
        uitknop.place(x=225, y=60)
 
-       # Label van dummygrafiek en refreshrate label plaatsen in het frame
-       grafiek.place(x=125, y=400)
+       # Refreshrate label plaatsen in het frame
        refreshrate_tekst.place(x=800, y=200)
+
+       # Grafiek plaatsen in het frame
+       canvas.get_tk_widget().place(x=50, y=200)
 
 class Modus(Pagina):
    def __init__(self, args):
