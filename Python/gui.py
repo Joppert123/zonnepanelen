@@ -117,6 +117,10 @@ class Lichtsensor(Pagina):
        canvas = FigureCanvasTkAgg(f, self)
        canvas.draw()
 
+       #Toolbar voor grafiek
+       toolbar = NavigationToolbar2Tk(canvas, self)
+       toolbar.update()
+
        # Dropdownbox plaatsen in het frame
        popupMenu.place(x=800, y=250)
 
@@ -164,6 +168,10 @@ class Ultrasonoorsensor(Pagina):
 
        canvas = FigureCanvasTkAgg(f, self)
        canvas.draw()
+
+       #Toolbar voor grafiek
+       toolbar = NavigationToolbar2Tk(canvas, self)
+       toolbar.update()
 
        # Dropdownbox plaatsen in het frame
        popupMenu.place(x=800, y=250)
