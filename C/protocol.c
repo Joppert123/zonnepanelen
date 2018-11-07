@@ -20,16 +20,45 @@
 #include <string.h>
 #include <stdio.h>
 
+char status = 0;
+
+void ping()
+{
+	serial_writeln("ping");
+}
+
+char get_connect_status()
+{
+	return status;
+}
+
+void set_connect_status(char ack)
+{
+	status = ack;
+}
+
 void get_commands()
 {
 	char data[200];
 	serial_readln(data, 200);
 	
-	// --> COMMANDS <--
-	if (!strcmp(data, "connect")) 
+	// CONNECTION
+	if (!strcmp(data, "ping"))
 	{
 		data[0] = '\0';
-		serial_writeln("Connected!");
+		serial_writeln("pong");
+	}
+	if (!strcmp(data, "pong"))
+	{
+		data[0] = '\0';
+		serial_writeln("");
+		set_connect_status(1);
+	}
+	if (!strcmp(data, "get_connect_status"))
+	{
+		data[0] = '\0';
+		sprintf(data, "%i", get_connect_status());
+		serial_writeln(data);
 	}
 	
 	// SUNSCREEN
