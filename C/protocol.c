@@ -20,11 +20,24 @@
 #include <string.h>
 #include <stdio.h>
 
+char connect = 0;
 char status = 0;
 
 void ping()
 {
+	if (!connect) return;
+	set_connect_status(0);
 	serial_writeln("ping");
+}
+
+char get_connect()
+{
+	return connect;
+}
+
+void set_connect(char ack)
+{
+	connect = ack;
 }
 
 char get_connect_status()
@@ -43,6 +56,12 @@ void get_commands()
 	serial_readln(data, 200);
 	
 	// CONNECTION
+	if (!strcmp(data, "connect"))
+	{
+		data[0] = '\0';
+		serial_writeln("connected");
+		set_connect(1);
+	}
 	if (!strcmp(data, "ping"))
 	{
 		data[0] = '\0';
@@ -54,6 +73,12 @@ void get_commands()
 		serial_writeln("");
 		set_connect_status(1);
 	}
+	if (!strcmp(data, "get_connect"))
+	{
+		data[0] = '\0';
+		sprintf(data, "%i", get_connect());
+		serial_writeln(data);
+	}
 	if (!strcmp(data, "get_connect_status"))
 	{
 		data[0] = '\0';
@@ -62,7 +87,7 @@ void get_commands()
 	}
 	
 	// SUNSCREEN
-	if (!strcmp(data, "get_status"))
+	if (!strcmp(data, "get_sunscreen_status"))
 	{
 		data[0] = '\0';
 		sprintf(data, "%i", get_sunscreen_status());
@@ -82,7 +107,7 @@ void get_commands()
 	}
 	
 	// SONAR
-	if (!strcmp(data, "get_distance"))
+	if (!strcmp(data, "get_sonar_distance"))
 	{
 		data[0] = '\0';
 		sprintf(data, "%i", get_sonar_distance());

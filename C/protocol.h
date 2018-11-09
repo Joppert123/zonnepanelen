@@ -16,6 +16,8 @@
 #define _protocol
 
 void ping();
+char get_connect();
+void set_connect(char ack);
 char get_connect_status();
 void set_connect_status(char ack);
 void get_commands();

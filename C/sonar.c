@@ -79,7 +79,7 @@ ISR(TIMER0_OVF_vect)
 
 ISR(PCINT0_vect)
 {
-	if (PINB & (1 << PINB1))					// Start timer & overflow interrupt on rising edge
+	if (PINB & (1 << PINB1))				// Start timer & overflow interrupt on rising edge
 	{				
 		TCCR0B |= (1<<CS00);
 		TIMSK0 |= 1<<TOIE0;
