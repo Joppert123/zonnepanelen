@@ -1,3 +1,5 @@
+# from * import connect
+
 class Protocol(object):
     def __init__(self):
         super(Protocol, self).__init__()
@@ -132,5 +134,3 @@ def interpreter(arg):
 interpreter(temp)
 interpreter(light)
 interpreter(sonor)
-
-testClass = Protocol()
