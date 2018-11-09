@@ -75,6 +75,7 @@ void get_commands()
 		data[0] = '\0';
 		serial_writeln("connected");
 		set_connect(1);
+		timeout = 0;
 	}
 	if (!strcmp(data, "ping"))
 	{
