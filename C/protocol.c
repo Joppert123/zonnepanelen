@@ -22,10 +22,24 @@
 
 char connect = 0;
 char status = 0;
+char timeout = 0;
 
 void ping()
 {
-	if (!connect) return;
+	if (!connect) 
+	{
+		return;
+	}
+	
+	timeout++;
+	
+	if (timeout > 6)
+	{
+		set_connect(0);
+		serial_writeln("disconnected");
+		return;
+	}
+	
 	set_connect_status(0);
 	serial_writeln("ping");
 }
@@ -72,6 +86,7 @@ void get_commands()
 		data[0] = '\0';
 		serial_writeln("");
 		set_connect_status(1);
+		timeout = 0;
 	}
 	if (!strcmp(data, "get_connect"))
 	{

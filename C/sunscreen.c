@@ -16,6 +16,30 @@
 #include "sonar.h"
 
 #include <avr/io.h>
+#include <avr/eeprom.h>
+
+uint8_t EEMEM MIN_EXTEND;
+uint8_t EEMEM MAX_EXTEND;
+
+void get_min_extend()
+{
+	
+}
+
+void set_min_extend()
+{
+	
+}
+
+void get_max_extend()
+{
+	
+}
+
+void set_max_extend()
+{
+	
+}
 
 void sunscreen_init()
 {
