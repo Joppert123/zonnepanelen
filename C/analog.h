@@ -21,6 +21,11 @@
 
 
 void analog_init();
+uint8_t get_min_temp();
+void set_min_temp(uint8_t length);
+uint8_t get_max_temp();
+void set_max_temp(uint8_t length);
+
 uint8_t read_adc(uint16_t channel);
 void getTemp();
 void getLicht();
