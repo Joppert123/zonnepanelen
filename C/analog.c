@@ -13,17 +13,41 @@
 
 
 #include "analog.h"
-#include "serial.h"
 
+#include "serial.h"
+#include <avr/eeprom.h>
 #include <avr/io.h>
 #include <stdio.h>
 #define F_CPU 16E6
 #include <util/delay.h>
 
+uint8_t EEMEM MIN_TEMP;
+uint8_t EEMEM MAX_TEMP;
+
 void analog_init()
 {
 	ADMUX = (1<<REFS0)|(1<<ADLAR);
 	ADCSRA = (1<<ADEN)|(1<<ADPS2)|(1<<ADPS1)|(1<<ADPS0); // Write | prescale 64
+}
+
+uint8_t get_min_temp()
+{
+	return eeprom_read_byte(&MIN_TEMP);
+}
+
+void set_min_temp(uint8_t length)
+{
+	eeprom_update_byte(&MIN_TEMP, length);
+}
+
+uint8_t get_max_temp()
+{
+	return eeprom_read_byte(&MAX_TEMP);
+}
+
+void set_max_temp(uint8_t length)
+{
+	eeprom_update_byte(&MAX_TEMP, length);
 }
 
 /*
