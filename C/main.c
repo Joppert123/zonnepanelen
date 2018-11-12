@@ -12,6 +12,7 @@
  *
  */
 
+#include "analog.h"
 #include "serial.h"
 #include "sonar.h"
 #include "scheduler.h"
