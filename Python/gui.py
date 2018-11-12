@@ -46,7 +46,7 @@ class Temperatuursensor(Pagina):
        uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
 
        # Refresh handmatig
-       refreshknop = tk.Button(self, text="Refresh", width="20", height="4", command=Protocol.getTemp)
+       refreshknop = tk.Button(self, text="Refresh", width="20", height="4")
 
        # Label voor het instellen van de refreshrate van de sensor
        refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
@@ -84,7 +84,7 @@ class Temperatuursensor(Pagina):
        uitknop.place(x=225, y=60)
 
        # Refresh handmatig knop plaatsen in het frame
-       refreshknop.place(x=400, y=60)
+       refreshknop.place(x=800, y=300)
 
        # Refreshrate label plaatsen in het frame
        refreshrate_tekst.place(x=800, y=200)
@@ -103,6 +103,8 @@ class Lichtsensor(Pagina):
        aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
        uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
 
+       # Refresh handmatig
+       refreshknop = tk.Button(self, text="Refresh", width="20", height="4")
 
        # Label voor het instellen van de refreshrate van de sensor
        refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
@@ -139,6 +141,9 @@ class Lichtsensor(Pagina):
        aanknop.place(x=50, y=60)
        uitknop.place(x=225, y=60)
 
+       # Refresh handmatig knop plaatsen in het frame
+       refreshknop.place(x=800, y=300)
+
        # Refreshrate label plaatsen in het frame
        refreshrate_tekst.place(x=800, y=200)
 
@@ -155,6 +160,9 @@ class Ultrasonoorsensor(Pagina):
        # Aan- en uitknop voor het inschakelen van de sensor
        aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
        uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
+
+       # Refresh handmatig
+       refreshknop = tk.Button(self, text="Refresh", width="20", height="4")
 
        # Label voor het instellen van de refreshrate van de sensor
        refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
@@ -190,6 +198,9 @@ class Ultrasonoorsensor(Pagina):
        # Aan- en uitknop plaatsen in het frame
        aanknop.place(x=50, y=60)
        uitknop.place(x=225, y=60)
+
+       # Refresh handmatig knop plaatsen in het frame
+       refreshknop.place(x=800, y=300)
 
        # Refreshrate label plaatsen in het frame
        refreshrate_tekst.place(x=800, y=200)
