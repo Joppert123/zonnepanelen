@@ -1,7 +1,7 @@
 /*
- * serial.h
+ * protocol.h
  *
- * Created: 31/10/2018 13:12:01
+ * Created: 05/11/2018 13:42:56
  * Author : ITV2H - Groep 4
     ______                         __ __
   / ____/________  ___  ____     / // /
@@ -12,11 +12,14 @@
  *
  */
 
-#ifndef _serial
-#define _serial
+#ifndef _protocol
+#define _protocol
 
-void serial_init();
-void serial_writeln(char* string);
-void serial_readln(char *data, char size);
+void ping();
+char get_connect();
+void set_connect(char ack);
+char get_connect_status();
+void set_connect_status(char ack);
+void get_commands();
 
 #endif

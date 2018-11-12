@@ -1,40 +1,49 @@
+import serial, time
+from connect import *
+
 class Protocol(object):
     def __init__(self):
         super(Protocol, self).__init__()
 
 # Getters:
 
-    def getName(arg):
+    def getName():
         pass
 
-    def getMode(arg):
+    def getMode():
         pass
 
-    def getTemp(arg):
+    def getTemp():
         pass
 
-    def getLight(arg):
+    def getLight():
         pass
 
-    def getSonor(arg):
+    def getSonor():
+        pass
+
+    def getScreen():
         pass
 
 
 # Setters:
 
-    def setName(arg):
+    def setName():
         pass
 
-    def setMode(arg):
+    def setMode():
         pass
 
-    def setTemp(arg):
+    def setTemp():
         pass
 
-    def setLight(arg):
+    def setLight():
         pass
 
-    def setSonor(arg):
+    def setSonor():
+        pass
+
+    def setScreen():
         pass
 
 
@@ -129,8 +138,11 @@ def interpreter(arg):
     print(str(from_hex(data)) + " " + map[sensor])
     # print(from_hex(counter))
 
-interpreter(temp)
-interpreter(light)
-interpreter(sonor)
+# interpreter(temp)
+# interpreter(light)
+# interpreter(sonor)
 
-testClass = Protocol()
+handshake = Handshake()
+protocol = Protocol()
+
+protocol.getScreen()

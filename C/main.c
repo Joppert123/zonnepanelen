@@ -13,29 +13,33 @@
  */
 
 #include "serial.h"
+#include "sonar.h"
 #include "scheduler.h"
-
-void test()
-{
-	serial_writeln("Testing scheduler!");
-}
+#include "protocol.h"
+#include "sunscreen.h"
 
 void setup()
 {
-	uart_init();
-	sch_init_t1();
+	// Initializations
+	serial_init();
+	sonar_init();
+	sunscreen_init();
+	sch_init();
 	
-	sch_add_task(test, 0, 100);
+	// Tasks
+	sch_add_task(get_commands, 0, 1);
+	sch_add_task(ping, 0, 10000);
 	
+	// Enable
 	sch_start();
 }
 
 int main()
 {
-	setup();									// Setup of modules
+	setup();
 	
 	while (1)
 	{
-		sch_dispatch_tasks();	
+		sch_dispatch_tasks();
 	}
 }
