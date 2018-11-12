@@ -16,6 +16,8 @@
 #define _serial
 
 void serial_init();
+unsigned char serial_read(void);
+void serial_write(unsigned char data);
 void serial_writeln(char* string);
 void serial_readln(char *data, char size);
 
