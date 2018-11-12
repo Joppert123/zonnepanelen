@@ -38,8 +38,16 @@ def Handshake(ser):
         # TO DO:
         # - Test saner ways to express hexadecimals
         # - Test the possible need for time.sleep()
-        connect = hex(11184810)
-        ser.write(connect.encode())
+
+        ####
+        # connect = hex(11184810)
+        # ser.write(connect.encode())
+        ####
+
+        # "Grote letters zijn cooler" - Lars, 2018
+        connect = "AAAAAA"
+        ser.write(ArduinoEncode(connect))
+
         # 0xabcdef is 11259375
         # 0xfedbca is 16629450
         confirm = ser.read(6)
@@ -50,6 +58,11 @@ def Handshake(ser):
     print("Handshake failed")
     print("Closing " + ser.name)
     ser.close()
+
+# Temporary placement:
+def ArduinoEncode(cmd):
+    end = "\0"
+    return (cmd + end).encode()
 
 Connect()
 # For debuging purposes:
