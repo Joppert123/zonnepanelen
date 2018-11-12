@@ -28,7 +28,6 @@ void setup()
 	
 	// Tasks
 	sch_add_task(get_commands, 0, 1);
-	sch_add_task(ping, 0, 10000);
 	
 	// Enable
 	sch_start();
