@@ -19,6 +19,7 @@
 
 #include <string.h>
 #include <stdio.h>
+#include <stdlib.h>
 
 char connected = 0;
 
@@ -35,7 +36,14 @@ void set_connect_status(char ack)
 void get_commands()
 {
 	char data[200];
+	char * split;
+	uint8_t value;
 	serial_readln(data, 200);
+	
+	// Split into value if SET command contains "="
+	split = strtok(data, "=");
+	split = strtok(NULL, "=");
+	value = atoi(split);
 	
 	// CONNECTION
 	if (!strcmp(data, "AAAAAA"))
@@ -46,43 +54,50 @@ void get_commands()
 		serial_write(0xEF);
 		set_connect_status(1);
 	}
-	if (!strcmp(data, "ping"))
-	{
-		data[0] = '\0';
-		serial_writeln("pong");
-	}
-	if (!strcmp(data, "get_connect_status"))
-	{
-		data[0] = '\0';
-		sprintf(data, "%i", get_connect_status());
-		serial_writeln(data);
-	}
 	
-	// SUNSCREEN
+	// SUNSCREEN GET
+	if (!strcmp(data, "get_sunscreen_min_extend"))
+	{
+		data[0] = '\0';
+		serial_write(get_sunscreen_min_extend());
+	}
 	if (!strcmp(data, "get_sunscreen_status"))
 	{
 		data[0] = '\0';
 		sprintf(data, "%i", get_sunscreen_status());
 		serial_writeln(data);
 	}
+	
+	// SUNSCREEN SET
+	if (!strcmp(data, "set_sunscreen_min_extend"))
+	{
+		data[0] = '\0';
+		set_sunscreen_min_extend(value);
+		serial_write(0xAA);
+	}
+	if (!strcmp(data, "set_sunscreen_max_extend"))
+	{
+		data[0] = '\0';
+		set_sunscreen_max_extend(value);
+		serial_write(0xAA);
+	}
 	if (!strcmp(data, "sunscreen_extend"))
 	{
 		data[0] = '\0';
-		sprintf(data, "%i", sunscreen_extend());
-		serial_writeln(data);
+		sunscreen_extend();
+		serial_write(0xAA);
 	}
 	if (!strcmp(data, "sunscreen_retract"))
 	{
 		data[0] = '\0';
-		sprintf(data, "%i", sunscreen_retract());
-		serial_writeln(data);
+		sunscreen_retract();
+		serial_write(0xAA);
 	}
 	
-	// SONAR
+	// SONAR GET
 	if (!strcmp(data, "get_sonar_distance"))
 	{
 		data[0] = '\0';
-		sprintf(data, "%i", get_sonar_distance());
-		serial_writeln(data);
+		serial_write(get_sonar_distance());
 	}
 }

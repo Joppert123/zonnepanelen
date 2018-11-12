@@ -21,29 +21,29 @@
 uint8_t EEMEM MIN_EXTEND;
 uint8_t EEMEM MAX_EXTEND;
 
-void get_min_extend()
-{
-	
-}
-
-void set_min_extend()
-{
-	
-}
-
-void get_max_extend()
-{
-	
-}
-
-void set_max_extend()
-{
-	
-}
-
 void sunscreen_init()
 {
 	DDRD |= (1 << DDD7);
+}
+
+uint8_t get_sunscreen_min_extend()
+{
+	return eeprom_read_byte(&MIN_EXTEND);
+}
+
+void set_sunscreen_min_extend(uint8_t length)
+{
+	eeprom_update_byte(&MIN_EXTEND, length);
+}
+
+uint8_t get_sunscreen_max_extend()
+{
+	return eeprom_read_byte(&MAX_EXTEND);
+}
+
+void set_sunscreen_max_extend(uint8_t length)
+{
+	eeprom_update_byte(&MAX_EXTEND, length);
 }
 
 char get_sunscreen_status()
@@ -58,16 +58,14 @@ char get_sunscreen_status()
 	}
 }
 
-char sunscreen_extend()
+void sunscreen_extend()
 {
-	while (get_sonar_distance() < 50);
+	while (get_sonar_distance() < get_sunscreen_max_extend());
 	PORTD |= (1 << PORTD7);
-	return 1;
 }
 
-char sunscreen_retract()
+void sunscreen_retract()
 {
-	while (get_sonar_distance() > 2);
+	while (get_sonar_distance() > get_sunscreen_min_extend());
 	PORTD &= ~(1 << PORTD7);
-	return 1;
 }
