@@ -1,4 +1,6 @@
-import serial, time
+import serial, time, random
+
+from converters import *
 
 # TO DO:
 # - PEP8
@@ -8,17 +10,18 @@ class Arduino():
     # Object used for storing connections.
     # For now it only contains the port name and Serial configuration.
     # TO DO:
-    # - Implement UID
     # - Extend class beyond simple storage device
-    def __init__(self, port, ser):
+    def __init__(self, port, ser, uid):
         self.port = port
         self.ser = ser
+        self.uid = uid
 
 connections = []
+UIDS = []
 
 def Connect():
-    # Ports in range of 256 is derived from the maximum value our 8-bit UID.
-    ports = ['COM%s' % (i+1) for i in range(256)]
+    # Ports in range of 255 is derived from the maximum value our 8-bit UID.
+    ports = ['COM%s' % (i+1) for i in range(255)]
     for port in ports:
         try:
             # Definitive timeout needs to be discussed.
@@ -27,7 +30,7 @@ def Connect():
             print(ser.name + " connected")
             print("Initializing handshake")
             Handshake(ser)
-            connections.append(Arduino(ser.name, ser))
+            connections.append(Arduino(ser.name, ser, GenerateUID()))
             pass
         except (OSError, serial.SerialException):
             pass
@@ -37,9 +40,7 @@ def Connect():
 def Handshake(ser):
     connected = 0
     for i in range(3):
-        # 0xaaaaaa probably also works but it's not possible to test right now.
         # TO DO:
-        # - Test saner ways to express hexadecimals
         # - Test the possible need for time.sleep()
 
         # "Grote letters zijn cooler" - Lars, 2018
@@ -69,7 +70,17 @@ def ArduinoEncode(cmd):
 def ArduinoDecode(cmd):
     return cmd.hex()
 
+def GenerateUID():
+    while 1:
+        uid = random.randint(0, 255)
+        if uid in UIDS:
+            pass
+        else:
+            UIDS.append(uid)
+            return to_hex(uid)[1::]
+            break
+
 Connect()
 # For debuging purposes:
 for connection in connections:
-    print(connection.port)
+    print(connection.port + " " + str(connection.uid))
