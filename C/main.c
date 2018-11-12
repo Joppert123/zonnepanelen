@@ -22,6 +22,7 @@
 void setup()
 {
 	// Initializations
+	analog_init();
 	serial_init();
 	sonar_init();
 	sunscreen_init();
