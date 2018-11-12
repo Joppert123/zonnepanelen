@@ -31,38 +31,43 @@ def Connect():
             pass
         except (OSError, serial.SerialException):
             pass
+    if len(connections) == 0:
+        print("No devices connected")
 
 def Handshake(ser):
+    connected = 0
     for i in range(3):
         # 0xaaaaaa probably also works but it's not possible to test right now.
         # TO DO:
         # - Test saner ways to express hexadecimals
         # - Test the possible need for time.sleep()
 
-        ####
-        # connect = hex(11184810)
-        # ser.write(connect.encode())
-        ####
-
         # "Grote letters zijn cooler" - Lars, 2018
         connect = "AAAAAA"
         ser.write(ArduinoEncode(connect))
 
-        # 0xabcdef is 11259375
-        # 0xfedbca is 16629450
         confirm = ser.read(6)
-        if confirm == hex(11259375):
-            confirm == hex(16629450)
-            ser.write(confirm.encode())
+
+        if confirm == b'\xab\xcd\xef':
+            ser.write(ArduinoEncode(confirm[::-1].hex()))
             print("Handshake confirmed")
-    print("Handshake failed")
-    print("Closing " + ser.name)
-    ser.close()
+            connected = 1
+
+        if connected == 1:
+            break
+
+    if connected == 0:
+        print("Handshake failed")
+        print("Closing " + ser.name)
+        ser.close()
 
 # Temporary placement:
 def ArduinoEncode(cmd):
     end = "\0"
     return (cmd + end).encode()
+
+def ArduinoDecode(cmd):
+    return cmd.hex()
 
 Connect()
 # For debuging purposes:
