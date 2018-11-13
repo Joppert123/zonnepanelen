@@ -1,64 +1,5 @@
 from connect import *
 
-import random
-
-class Protocol(object):
-    def __init__(self):
-        super(Protocol, self).__init__()
-
-
-
-# Getters:
-
-    # Sunscreen:
-
-
-
-    def getName(arg):
-        pass
-
-    def getMode(arg):
-        pass
-
-    def getTemp(arg):
-        pass
-
-    def getLight(arg):
-        pass
-
-    def getSonor(arg):
-        pass
-
-
-# Setters:
-
-    def setName(arg):
-        pass
-
-    def setMode(arg):
-        pass
-
-    def setTemp(arg):
-        pass
-
-    def setLight(arg):
-        pass
-
-    def setSonor(arg):
-        pass
-
-
-# WIP:
-
-# Testing 1, 2, 3:
-
-# class ArduinoException(Exception):
-#     def __init__(self, message, errors):
-#         super().__init__(message)
-#
-#     if response == b'':
-#         print("KANKER ALLES GAAT FOUT")
-
 def Transmit(ser, command):
     ser.write(ArduinoEncodeHex(command))
     response = ser.readline()
@@ -68,6 +9,7 @@ def Transmit(ser, command):
         else:
             return response
             break
+
 
 def ArduinoDecodeInteger(arg):
     output = arg.rstrip().decode()
@@ -96,3 +38,20 @@ if debug == 1:
 
     for command in commands:
         print(command + ": " + str(Transmit(connections[0].ser, command)))
+
+# Debugging commands:
+# get_sunscreen_status: b'0\r\n'
+# get_sunscreen_min_extend: b'\x05'
+# get_sunscreen_max_extend: No response
+# set_sunscreen_min_extend: b'\xaa'
+# set_sunscreen_max_extend: b'\xaa'
+# get_temp: b'\x0e'
+# get_min_temp: b'\x02'
+# get_max_temp: b'\xff'
+# set_min_temp: b'\xaa'
+# set_max_temp: b'\xaa'
+# get_light: b'\x02'
+# get_sonar_distance: b'='
+# sunscreen_extend: b'\xaa'
+# sunscreen_retract: b'\xaa'
+# [Finished in 45.691s]
