@@ -14,12 +14,9 @@
 
 #include "analog.h"
 
-#include "serial.h"
 #include <avr/eeprom.h>
 #include <avr/io.h>
 #include <stdio.h>
-#define F_CPU 16E6
-#include <util/delay.h>
 
 uint8_t EEMEM MIN_TEMP;
 uint8_t EEMEM MAX_TEMP;
@@ -57,26 +54,21 @@ void set_max_temp(uint8_t length)
 	@return uint8_t  adc value
 */
 
-
-
 uint8_t read_adc(uint16_t channel)
 {
-		ADMUX &= 0xF0;							// Empty previous channel
-		ADMUX |= channel;						// Admux => new channel
-		ADCSRA |= (1<<ADSC);					// start conversion
-		loop_until_bit_is_clear(ADCSRA, ADSC);
-		return ADCH;
+	ADMUX &= 0xF0;							// Empty previous channel
+	ADMUX |= channel;						// Admux => new channel
+	ADCSRA |= (1<<ADSC);					// start conversion
+	loop_until_bit_is_clear(ADCSRA, ADSC);
+	return ADCH;
 }
 
-void getTemp()
+uint8_t get_temp()
 {
-		uint8_t mV = (read_adc(0) * (5000 / 1024)); //5V
-		uint8_t temperature = ((mV * 100) / 1024);
-		
-			char buffer[5];
-			sprintf(buffer, "%i", temperature);
-			serial_writeln(buffer);
-	
+	uint8_t mV = (read_adc(0) * (5000 / 1024)); //5V
+	uint8_t temperature = ((mV * 100) / 1024);
+			
+	return temperature;
 }
 
 /*
@@ -85,7 +77,7 @@ void getTemp()
 	@see https://learn.adafruit.com/photocells/overview
 */
 
-void getLicht()
+uint8_t get_light()
 {
 	
 	uint8_t licht = read_adc(1);
@@ -93,11 +85,6 @@ void getLicht()
 	// 10 - 200 DIM
 	// 200 - 500 LIGHT
 	// 500 - 1000 VERY BRIGHT
-	
-				char buffer[5];
-				sprintf(buffer, "%i", licht);
-				serial_writeln(buffer);
+
+	return licht;
 }
-
-
-

@@ -1,8 +1,5 @@
-
-
-
 /*
- * analog.c
+ * analog.h
  *
  * Author : ITV2H - Groep 4
     ______                         __ __
@@ -19,17 +16,13 @@
 
 #include <stdint.h>
 
-
 void analog_init();
 uint8_t get_min_temp();
 void set_min_temp(uint8_t length);
 uint8_t get_max_temp();
 void set_max_temp(uint8_t length);
-
 uint8_t read_adc(uint16_t channel);
-void getTemp();
-void getLicht();
+uint8_t get_temp();
+uint8_t get_light();
 
-
-
-#endif /* ANALOG_H_ */
+#endif

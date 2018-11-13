@@ -12,12 +12,12 @@
  *
  */
 
-#include "analog.h"
 #include "serial.h"
 #include "sonar.h"
 #include "scheduler.h"
 #include "protocol.h"
 #include "sunscreen.h"
+#include "analog.h"
 
 void setup()
 {

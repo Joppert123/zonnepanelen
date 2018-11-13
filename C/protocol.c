@@ -16,6 +16,7 @@
 #include "serial.h"
 #include "sunscreen.h"
 #include "sonar.h"
+#include "analog.h"
 
 #include <string.h>
 #include <stdio.h>
@@ -92,6 +93,44 @@ void get_commands()
 		data[0] = '\0';
 		sunscreen_retract();
 		serial_write(0xAA);
+	}
+	
+	// TEMPERATURE GET
+	if (!strcmp(data, "get_min_temp"))
+	{
+		data[0] = '\0';
+		serial_write(get_min_temp());
+	}
+	if (!strcmp(data, "get_max_temp"))
+	{
+		data[0] = '\0';
+		serial_write(get_max_temp());
+	}
+	if (!strcmp(data, "get_temp"))
+	{
+		data[0] = '\0';
+		serial_write(get_temp());
+	}
+	
+	// TEMPERATURE SET
+	if (!strcmp(data, "set_min_temp"))
+	{
+		data[0] = '\0';
+		set_min_temp(value);
+		serial_write(0xAA);
+	}
+	if (!strcmp(data, "set_max_temp"))
+	{
+		data[0] = '\0';
+		set_max_temp(value);
+		serial_write(0xAA);
+	}
+	
+	// Light GET
+	if (!strcmp(data, "get_light"))
+	{
+		data[0] = '\0';
+		serial_write(get_light());
 	}
 	
 	// SONAR GET

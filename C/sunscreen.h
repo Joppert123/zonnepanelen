@@ -23,7 +23,7 @@ void set_sunscreen_min_extend(uint8_t length);
 uint8_t get_sunscreen_max_extend();
 void set_sunscreen_max_extend(uint8_t length);
 char get_sunscreen_status();
-char sunscreen_extend();
-char sunscreen_retract();
+void sunscreen_extend();
+void sunscreen_retract();
 
 #endif
