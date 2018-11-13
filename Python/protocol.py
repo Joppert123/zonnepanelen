@@ -10,6 +10,10 @@ class Protocol(object):
 
 # Getters:
 
+    # Sunscreen:
+
+
+
     def getName(arg):
         pass
 
@@ -55,21 +59,18 @@ class Protocol(object):
 #     if response == b'':
 #         print("KANKER ALLES GAAT FOUT")
 
-def Talk(ser, command):
+def Transmit(ser, command):
     ser.write(ArduinoEncodeHex(command))
     response = ser.readline()
-    tries = 0
-    while tries < 3:
+    for i in range(2):
         if response == b'':
-            tries += 1
-            print(tries)
-            response = ser.readline()
+            return "No response"
         else:
-            print(ArduinoDecodeInteger(response))
+            return response
             break
 
 def ArduinoDecodeInteger(arg):
-    output = int(arg.rstrip().decode())
+    output = arg.rstrip().decode()
     return output
 
 
@@ -77,4 +78,21 @@ def ArduinoDecodeInteger(arg):
 debug = 1
 if debug == 1:
     Connect()
-    Talk(connections[0].ser, "get_sunscreen_min_extend")
+    print("Debugging commands.")
+    commands = ["get_sunscreen_status",
+                "get_sunscreen_min_extend",
+                "get_sunscreen_max_extend",
+                "set_sunscreen_min_extend",
+                "set_sunscreen_max_extend",
+                "get_temp",
+                "get_min_temp",
+                "get_max_temp",
+                "set_min_temp",
+                "set_max_temp",
+                "get_light",
+                "get_sonar_distance",
+                "sunscreen_extend",
+                "sunscreen_retract"]
+
+    for command in commands:
+        print(command + ": " + str(Transmit(connections[0].ser, command)))
