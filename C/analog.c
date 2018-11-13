@@ -80,7 +80,7 @@ uint8_t get_temp()
 uint8_t get_light()
 {
 	
-	uint8_t licht = read_adc(1);
+	uint8_t licht = (read_adc(1) * 10)/240;
 	// < 10	DARK
 	// 10 - 200 DIM
 	// 200 - 500 LIGHT
