@@ -29,10 +29,10 @@ void sonar_init()
 	DDRB &= ~(1 << PORTB1);
 }
 
-uint16_t get_sonar_distance()
+uint8_t get_sonar_distance()
 {
 	float distance = 0.0f;
-	uint16_t prevDist = 0.0;
+	uint8_t prevDist = 0.0;
 
 	cli();									// Enabling echo-pin interrupt
 	PCICR |= (1 << PCIE0);
@@ -67,7 +67,7 @@ uint16_t get_sonar_distance()
 		distance = prevDist;
 	}
 	
-	uint16_t convert = distance;			// Converting float to int
+	uint8_t convert = distance;				// Converting float to int
 	return convert;
 }
 

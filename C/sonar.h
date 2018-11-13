@@ -18,6 +18,6 @@
 #define _sonar
 
 void sonar_init();
-uint16_t get_sonar_distance();
+uint8_t get_sonar_distance();
 
 #endif
