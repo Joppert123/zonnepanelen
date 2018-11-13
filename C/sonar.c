@@ -32,7 +32,6 @@ void sonar_init()
 uint8_t get_sonar_distance()
 {
 	float distance = 0.0f;
-	uint8_t prevDist = 0.0;
 
 	cli();									// Enabling echo-pin interrupt
 	PCICR |= (1 << PCIE0);
@@ -64,7 +63,12 @@ uint8_t get_sonar_distance()
 	
 	if (distance > 200)						// Sensor only works up to 400cm (Sunscreen is 2m)
 	{
-		distance = prevDist;
+		distance = 200;
+	}
+	
+	if (distance == 0)
+	{
+		distance = 200;
 	}
 	
 	uint8_t convert = distance;				// Converting float to int
