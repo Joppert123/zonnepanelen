@@ -1,8 +1,12 @@
-# from * import connect
+from connect import *
+
+import random
 
 class Protocol(object):
     def __init__(self):
         super(Protocol, self).__init__()
+
+
 
 # Getters:
 
@@ -42,95 +46,35 @@ class Protocol(object):
 
 # WIP:
 
-# Converters:
+# Testing 1, 2, 3:
 
-def to_bin(dec):
-    if dec == 0:
-        return '0'
-    return to_bin(dec // 2) + str(dec % 2)
-
-def to_hex(dec):
-    if dec == 0:
-        return '0'
-    return to_hex(dec // 16) + "0123456789abcdef"[dec % 16]
-
-def from_bin(bin):
-    if bin == "":
-        return 0
-    return 2 * from_bin(str(bin)[:-1]) + int(str(bin)[-1])
-
-def from_dec(dec):
-    if dec == "":
-        return 0
-    return 10 * from_dec(str(dec)[:-1]) + int(str(dec)[-1])
-
-def from_hex(hex):
-    if hex == "":
-        return 0
-    map = {"0": 0,
-           "1": 1,
-           "2": 2,
-           "3": 3,
-           "4": 4,
-           "5": 5,
-           "6": 6,
-           "7": 7,
-           "8": 8,
-           "9": 9,
-           "a": 10,
-           "b": 11,
-           "c": 12,
-           "d": 13,
-           "e": 14,
-           "f": 15}
-    return 16 * from_hex(hex[:-1]) + map[hex[-1]]
-
-# print(to_bin(7))
-# print(to_hex(0))
-# print(from_bin(1010))
-# print(from_dec(99))
-# print(from_hex("399"))
-
-# ---------------------------------------
-# |    UID    | Snsr |   Data    | Cntr |
-# ---------------------------------------
-# |         8 |    4 |         8 |    4 |
-# | 0000_0001 | 0001 | 0001_1011 | 0001 |
-# |        01 |    1 |        1B |    1 |
-# ---------------------------------------
+# class ArduinoException(Exception):
+#     def __init__(self, message, errors):
+#         super().__init__(message)
 #
-# -----------------
-# | Sensor |  ID  |
-# -----------------
-# |   Temp | 0001 |
-# |  Light | 0002 |
-# |  Sonor | 0003 |
-# -----------------
+#     if response == b'':
+#         print("KANKER ALLES GAAT FOUT")
 
-# Temp = Celcius Decimaal
-# Light = Lux Decimaal
-# Sonor = Afstand (Cm) Decimaal
+def Talk(ser, command):
+    ser.write(ArduinoEncodeHex(command))
+    response = ser.readline()
+    tries = 0
+    while tries < 3:
+        if response == b'':
+            tries += 1
+            print(tries)
+            response = ser.readline()
+        else:
+            print(ArduinoDecodeInteger(response))
+            break
 
-temp  = "0111b1"
-light = "012ab1"
-sonor = "013ef1"
+def ArduinoDecodeInteger(arg):
+    output = int(arg.rstrip().decode())
+    return output
 
-def interpreter(arg):
-    uid = arg[0:2]
-    sensor = arg[2]
-    data = arg[3:5]
-    counter = arg[5]
 
-    map = {"1":"Celcius",
-           "2":"Lux",
-           "3":"Centimeter"}
-
-    # Debug onzin:
-
-    # print(from_hex(uid))
-    print(str(from_hex(data)) + " " + map[sensor])
-    # print(from_hex(counter))
-
-interpreter(temp)
-interpreter(light)
-interpreter(sonor)
+# For debuging purposes:
+debug = 1
+if debug == 1:
+    Connect()
+    Talk(connections[0].ser, "get_sunscreen_min_extend")

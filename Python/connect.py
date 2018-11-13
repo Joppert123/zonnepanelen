@@ -45,12 +45,12 @@ def Handshake(ser):
 
         # "Grote letters zijn cooler" - Lars, 2018
         connect = "AAAAAA"
-        ser.write(ArduinoEncode(connect))
+        ser.write(ArduinoEncodeHex(connect))
 
         confirm = ser.read(6)
 
         if confirm == b'\xab\xcd\xef':
-            ser.write(ArduinoEncode(confirm[::-1].hex()))
+            ser.write(ArduinoEncodeHex(confirm[::-1].hex()))
             print("Handshake confirmed")
             connected = 1
 
@@ -63,11 +63,11 @@ def Handshake(ser):
         ser.close()
 
 # Temporary placement:
-def ArduinoEncode(cmd):
+def ArduinoEncodeHex(cmd):
     end = "\0"
     return (cmd + end).encode()
 
-def ArduinoDecode(cmd):
+def ArduinoDecodeHex(cmd):
     return cmd.hex()
 
 def GenerateUID():
@@ -80,7 +80,10 @@ def GenerateUID():
             return to_hex(uid)[1::]
             break
 
-Connect()
+
 # For debuging purposes:
-for connection in connections:
-    print(connection.port + " " + str(connection.uid))
+debug = 0
+if debug == 1:
+    Connect()
+    for connection in connections:
+        print(connection.port + " " + str(connection.uid))
