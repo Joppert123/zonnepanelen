@@ -186,3 +186,15 @@ void auto_light()
 		serial_write(0x02);
 	}
 }
+
+void auto_sonar()
+{
+	if (get_sonar_distance() > get_sunscreen_max_extend())
+	{
+		PORTB |= (1 << PORTB2);
+	}
+	else if (get_sonar_distance() < get_sunscreen_min_extend())
+	{
+		PORTB &= ~(1 << PORTB2);
+	}
+}

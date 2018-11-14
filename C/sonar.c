@@ -25,7 +25,7 @@ uint32_t countTimer0 = 0;					// 32-bit counter to save overflows from counter0
 
 void sonar_init()
 {
-	DDRB |= (1 << PORTB0);					// Initializing HC-SR04 pins
+	DDRB |= (1 << PORTB0)|(1 << PORTB2);					// Initializing HC-SR04 pins
 	DDRB &= ~(1 << PORTB1);
 }
 

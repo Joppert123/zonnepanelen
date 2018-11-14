@@ -29,5 +29,6 @@ void sunscreen_extend();
 void sunscreen_retract();
 void auto_temp();
 void auto_light();
+void auto_sonar();
 
 #endif
