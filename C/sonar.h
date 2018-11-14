@@ -1,7 +1,7 @@
 /*
  * serial.h
  *
- * Created: 31/10/2018 13:12:01
+ * Created: 06/11/2018 20:24:42
  * Author : ITV2H - Groep 4
     ______                         __ __
   / ____/________  ___  ____     / // /
@@ -12,13 +12,12 @@
  *
  */
 
-#ifndef _serial
-#define _serial
+#include <avr/io.h>
 
-void serial_init();
-unsigned char serial_read(void);
-void serial_write(unsigned char data);
-void serial_writeln(char* string);
-void serial_readln(char *data, char size);
+#ifndef _sonar
+#define _sonar
+
+void sonar_init();
+uint8_t get_sonar_distance();
 
 #endif

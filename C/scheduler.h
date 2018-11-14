@@ -25,7 +25,7 @@ typedef struct
 } sTask;
 
 // Function prototypes
-void sch_init_t1(void);
+void sch_init(void);
 void sch_start(void);
 
 // Core scheduler functions

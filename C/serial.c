@@ -12,15 +12,12 @@
  *
  */
 
+#include "serial.h"
 #include <avr/io.h>
-#include <stdio.h>
-#include <stdlib.h>
 #include <string.h>
 #include <avr/sfr_defs.h>
-#define F_CPU 16E6
-#include <util/delay.h>
 
-void uart_init()
+void serial_init()
 {
 	UBRR0H = 0;																// Setting baud rate 19.200
 	UBRR0L = 51;
@@ -31,7 +28,7 @@ void uart_init()
 
 void serial_write(unsigned char data)
 {
-	while(!(UCSR0A & (1<<UDRE0)));
+	while(!(UCSR0A & (1 << UDRE0)));
 	UDR0 = data;
 }
 
@@ -42,20 +39,22 @@ void serial_writeln(char* string)
 		serial_write(string[i]);
 	}
 	
-	serial_write(0x0A);														// New line and carriage return
 	serial_write(0x0D);
+	serial_write(0x0A);														// New line and carriage return
 }
 
 unsigned char serial_read(void)
 {
-	while(!(UCSR0A & (1<<RXC0)));
+	while(!(UCSR0A & (1 << RXC0)));
 	return UDR0;
 }
 
 void serial_readln(char *data, char size)
 {
 	unsigned char i = 0;
-
+	
+	if (!(UCSR0A & (1 << RXC0))) return;									// Don't wait for input, only when it happens
+	
 	if (size == 0) return;													// Return if not enough space in buffer
 
 	while (i < size - 1)													// Check for space with NULL at the end
@@ -69,20 +68,3 @@ void serial_readln(char *data, char size)
 	
 	data[i] = 0;															// String null terminated
 }
-
-/*
-int main()
-{
-	uart_init(); // TODO - CREATE SETUP
-	_delay_ms(1000);
-
-	char data[200];															// Buffer for commands
-
-	while(1)
-	{
-		serial_readln(data, 200);
-		
-		if (!strcmp(data, "connect")) serial_writeln("CONNECTED");	
-	}
-}
-*/
