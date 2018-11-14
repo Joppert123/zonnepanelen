@@ -21,6 +21,12 @@ uint8_t get_min_temp();
 void set_min_temp(uint8_t length);
 uint8_t get_max_temp();
 void set_max_temp(uint8_t length);
+
+uint8_t get_min_light();
+void set_min_light(uint8_t length);
+uint8_t get_max_light();
+void set_max_light(uint8_t length);
+
 uint8_t read_adc(uint16_t channel);
 uint8_t get_temp();
 uint8_t get_light();
