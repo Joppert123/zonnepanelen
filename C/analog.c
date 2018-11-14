@@ -65,10 +65,15 @@ uint8_t read_adc(uint16_t channel)
 
 uint8_t get_temp()
 {
-	uint8_t mV = (read_adc(0) * (5000 / 1024)); //5V
-	uint8_t temperature = ((mV * 100) / 1024);
-			
-	return temperature;
+	float voltage = (read_adc(0) * 5.0);
+	voltage /= 1024.0;
+	
+	float temperatureC = (voltage - 0.5) * 10;
+	int temp_int = temperatureC * 100;
+		
+	uint8_t res = (uint8_t) temp_int;
+		
+	return res;
 }
 
 /*
