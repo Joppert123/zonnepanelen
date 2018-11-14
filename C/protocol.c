@@ -62,6 +62,11 @@ void get_commands()
 		data[0] = '\0';
 		serial_write(get_sunscreen_min_extend());
 	}
+	if (!strcmp(data, "get_sunscreen_max_extend"))
+	{
+		data[0] = '\0';
+		serial_write(get_sunscreen_max_extend());
+	}
 	if (!strcmp(data, "get_sunscreen_status"))
 	{
 		data[0] = '\0';
