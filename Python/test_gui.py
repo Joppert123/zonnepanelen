@@ -63,13 +63,14 @@ def TransmitBetter(command, arg=""):
         if arg != "" and isinstance(arg, str) is True:
             command = command + "=" + arg
             # Debug:
-            print(command)
+            # print(command)
         else:
             Report("no arg provided")
             return
 
-    # response = int(Transmit(connections[0].ser, command).hex(), 16)
-    response = "response"
+    response = int(Transmit(connections[0].ser, command).hex(), 16)
+    # Debug:
+    # response = "response"
 
     if command[:3] == "get":
         if command == "get_sunscreen_min_extend":
@@ -95,7 +96,8 @@ def TransmitBetter(command, arg=""):
         if command == "get_sonar_distance":
             distance = response
 
-print(temp)
-TransmitBetter("get_temp")
-print(temp)
-TransmitBetter("set_max_temp", "50")
+# Debug:
+# print(temp)
+# TransmitBetter("get_temp")
+# print(temp)
+# TransmitBetter("set_max_temp", "50")
