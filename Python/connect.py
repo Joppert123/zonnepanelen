@@ -52,21 +52,19 @@ def Connect():
 def Handshake(ser):
     connected = 0
     for i in range(3):
-        # TO DO:
-        # - Test the possible need for time.sleep()
-
         # "Grote letters zijn cooler" - Lars, 2018
         connect = "AAAAAA"
         ser.write(ArduinoEncodeHex(connect))
 
         confirm = ser.read(6)
+        Report(confirm)
 
         if confirm == b'\xab\xcd\xef':
             ser.write(ArduinoEncodeHex(confirm[::-1].hex()))
-            Report("Handshake confirmed")
             connected = 1
 
         if connected == 1:
+            Report("Handshake confirmed")
             break
 
     if connected == 0:
