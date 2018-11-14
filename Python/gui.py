@@ -28,11 +28,32 @@ class Algemeen(Pagina):
        label_naam = tk.Label(self, text="Naam", font="Verdana 10")
        entry_naam = tk.Entry(self)
 
+       # Sunscreen button for get
+       getSunscreenStatusButton = tk.Button(self, text="Get Sunscreen Status", width="30", height="2")
+       getSunscreenMinExtendButton = tk.Button(self, text="Get Sunscreen Mininmal Extend", width="30", height="2")
+       getSunscreenMaxExtendButton = tk.Button(self, text="Get Sunscreen Maximum Extend", width="30", height="2")
+
+       # Sunscreen button for set
+       setSunscreenMinExtendButton = tk.Button(self, text="Set Sunscreen Mininmal Extend", width="30", height="2")
+       setSunscreenMaxExtendButton = tk.Button(self, text="Set Sunscreen Maximum Extend", width="30", height="2")
+
+
+       # Sunscreen manual functions
+       sunscreenExtendButton = tk.Button(self, text="Extend Sunscreen", width="30", height="2")
+       sunscreenRetractButton = tk.Button(self, text="Retract Sunscreen", width="30", height="2")
+
        # Het plaatsen van de objecten in het frame
        label_titel.place(x=10, y=15)
        label_instellingen.place(x=10, y=60)
        label_naam.place(x=10, y=100)
        entry_naam.place(x=60, y=100)
+       getSunscreenStatusButton.place(x=10, y=150)
+       getSunscreenMinExtendButton.place(x=10, y=220)
+       getSunscreenMaxExtendButton.place(x=10, y=290)
+       setSunscreenMinExtendButton.place(x=10, y=360)
+       setSunscreenMaxExtendButton.place(x=10, y=430)
+       sunscreenExtendButton.place(x=10, y=500)
+       sunscreenRetractButton.place(x=10, y=570)
 
 class Temperatuursensor(Pagina):
    def __init__(self, args):
@@ -41,15 +62,14 @@ class Temperatuursensor(Pagina):
        #Label voor de titel van de 'pagina'
        label_titel = tk.Label(self, text="Temperatuursensor", font="Verdana 16 bold")
 
-       # Aan- en uitknop voor het inschakelen van de sensor
-       aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
-       uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
+       # Temperature buttons for get
+       getTemperatureButton = tk.Button(self, text="Get Temperature", width="30", height="2")
+       getMinTempButton = tk.Button(self, text="Get Minimum Temperature", width="30", height="2")
+       getMaxTempButton = tk.Button(self, text="Get Maximum Temperature", width="30", height="2")
 
-       # Refresh handmatig
-       refreshknop = tk.Button(self, text="Refresh", width="20", height="4")
-
-       # Label voor het instellen van de refreshrate van de sensor
-       refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
+       # Sunscreen button for set
+       setMinTempButton = tk.Button(self, text="Set Minimum Temperature", width="30", height="2")
+       setMaxTempButton = tk.Button(self, text="Set Maximum Temperature", width="30", height="2")
 
        # Variabele voor de dropdownbox voor het instellen van de refreshrate van de sensor, momenteel is de functie nog niet geïmplementeerd
        tkvar = StringVar(root)
@@ -77,17 +97,14 @@ class Temperatuursensor(Pagina):
        label_titel.place(x=10, y=15)
 
        # Dropdownbox plaatsen in het frame
-       popupMenu.place(x=800, y=250)
+       popupMenu.place(x=630, y=650)
 
-       # Aan- en uitknop plaatsen in het frame
-       aanknop.place(x=50, y=60)
-       uitknop.place(x=225, y=60)
-
-       # Refresh handmatig knop plaatsen in het frame
-       refreshknop.place(x=800, y=300)
-
-       # Refreshrate label plaatsen in het frame
-       refreshrate_tekst.place(x=800, y=200)
+       # Place buttons in frame
+       getTemperatureButton.place(x=800, y=200)
+       getMinTempButton.place(x=630, y=300)
+       getMaxTempButton.place(x=630, y=400)
+       setMinTempButton.place(x=970, y=300)
+       setMaxTempButton.place(x=970, y=400)
 
        # Grafiek plaatsen in het frame
        canvas.get_tk_widget().place(x=50, y=200)
@@ -99,15 +116,9 @@ class Lichtsensor(Pagina):
        #Label voor de titel van de 'pagina'
        label_titel = tk.Label(self, text="Lichtsensor", font="Verdana 16 bold")
 
-       # Aan- en uitknop voor het inschakelen van de sensor
-       aanknop = tk.Button(self, text="Aan", background="Green", width="20", height="4")
-       uitknop = tk.Button(self, text="Uit", background="Red", width="20", height="4")
-
-       # Refresh handmatig
-       refreshknop = tk.Button(self, text="Refresh", width="20", height="4")
-
-       # Label voor het instellen van de refreshrate van de sensor
-       refreshrate_tekst = tk.Label(self, text="Refreshrate:", font="Verdana 14")
+       # Buttons for get light
+       getLightButton = tk.Button(self, text="Get Light", width="30", height="2")
+       getSonarDistanceButton = tk.Button(self, text="Get Sonar Distance", width="30", height="2")
 
        # Variabele voor de dropdownbox voor het instellen van de refreshrate van de sensor, momenteel is de functie nog niet geïmplementeerd
        tkvar = StringVar(root)
@@ -132,20 +143,14 @@ class Lichtsensor(Pagina):
        toolbar.update()
 
        # Dropdownbox plaatsen in het frame
-       popupMenu.place(x=800, y=250)
+       popupMenu.place(x=630, y=650)
 
-       #Plaatsen van het label object in het frame
+       # Plaatsen van het label object in het frame
        label_titel.place(x=10, y=15)
 
-       # Aan- en uitknop plaatsen in het frame
-       aanknop.place(x=50, y=60)
-       uitknop.place(x=225, y=60)
-
-       # Refresh handmatig knop plaatsen in het frame
-       refreshknop.place(x=800, y=300)
-
-       # Refreshrate label plaatsen in het frame
-       refreshrate_tekst.place(x=800, y=200)
+       # Getters plaatsen in frame
+       getLightButton.place(x=630, y=300)
+       getSonarDistanceButton.place(x=970, y=300)
 
        # Grafiek plaatsen in het frame
        canvas.get_tk_widget().place(x=50, y=200)
