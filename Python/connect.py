@@ -23,13 +23,14 @@ UIDS = []
 
 
 def Report(s):
+    # To ensure messages are reported runtime during testing.
     print(s)
-    # Ensures messages from different threads appear in the right order
     sys.stdout.flush()
     time.sleep(0.01)
 
 
 def Connect():
+
     # Ports in range of 255 is derived from the maximum value our 8-bit UID.
     ports = ['COM%s' % (i + 1) for i in range(255)]
     for port in ports:

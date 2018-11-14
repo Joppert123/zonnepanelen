@@ -3,22 +3,25 @@ from connect import *
 
 def Transmit(ser, command):
     ser.write(ArduinoEncodeHex(command))
-    response = ser.readline()
-    for i in range(2):
+    response = ser.read(1)
+    for i in range(10):
         if response == b'':
-            Report("Failed")
+            Report("STERF!")
+            time.sleep(3)
+            ser.write(ArduinoEncodeHex(command))
+            response = ser.read(1)
         else:
             return response
-            break
 
 
-def ArduinoDecodeInteger(arg):
+def ArduinoDecodeHex(arg):
+
     output = arg.rstrip().decode()
     return output
 
 
 # For debuging purposes:
-debug = 0
+debug = 1
 if debug == 1:
     Connect()
     print("Debugging commands.")
@@ -38,7 +41,8 @@ if debug == 1:
                 "sunscreen_retract"]
 
     for command in commands:
-        print(command + ": " + str(Transmit(connections[0].ser, command)))
+        response = int(Transmit(connections[0].ser, command).hex(), 16)
+        print(command + ": " + str(response))
 
 # Debugging commands:
 # get_sunscreen_status: b'0\r\n'
