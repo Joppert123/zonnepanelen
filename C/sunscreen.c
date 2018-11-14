@@ -16,8 +16,6 @@
 #include "analog.h"
 #include "sonar.h"
 
-#include "serial.h"
-
 #include <avr/io.h>
 #include <avr/eeprom.h>
 
