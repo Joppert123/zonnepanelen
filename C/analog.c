@@ -20,6 +20,8 @@
 
 uint8_t EEMEM MIN_TEMP;
 uint8_t EEMEM MAX_TEMP;
+uint8_t EEMEM MIN_LIGHT;
+uint8_t EEMEM MAX_LIGHT;
 
 void analog_init()
 {
@@ -45,6 +47,26 @@ uint8_t get_max_temp()
 void set_max_temp(uint8_t length)
 {
 	eeprom_update_byte(&MAX_TEMP, length);
+}
+
+uint8_t get_min_light()
+{
+	return eeprom_read_byte(&MIN_LIGHT);
+}
+
+void set_min_light(uint8_t length)
+{
+	eeprom_update_byte(&MIN_LIGHT, length);
+}
+
+uint8_t get_max_light()
+{
+	return eeprom_read_byte(&MAX_LIGHT);
+}
+
+void set_max_light(uint8_t length)
+{
+	eeprom_update_byte(&MAX_LIGHT, length);
 }
 
 /*

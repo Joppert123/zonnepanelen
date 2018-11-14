@@ -131,11 +131,35 @@ void get_commands()
 		serial_write(0xAA);
 	}
 	
-	// Light GET
+	// LIGHT GET
+	if (!strcmp(data, "get_min_light"))
+	{
+		data[0] = '\0';
+		serial_write(get_min_light());
+	}
+	if (!strcmp(data, "get_max_light"))
+	{
+		data[0] = '\0';
+		serial_write(get_max_light());
+	}
 	if (!strcmp(data, "get_light"))
 	{
 		data[0] = '\0';
 		serial_write(get_light());
+	}
+	
+	// LIGHT SET
+	if (!strcmp(data, "set_min_light"))
+	{
+		data[0] = '\0';
+		set_min_light(value);
+		serial_write(0xAA);
+	}
+	if (!strcmp(data, "set_max_light"))
+	{
+		data[0] = '\0';
+		set_max_light(value);
+		serial_write(0xAA);
 	}
 	
 	// SONAR GET
