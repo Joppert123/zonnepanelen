@@ -143,7 +143,7 @@ void get_commands()
 		serial_write(get_temp());
 	}
 	
-	// TEMPERATURE SET
+	// LIGHT SET
 	if (!strcmp(data, "set_min_light"))
 	{
 		data[0] = '\0';
