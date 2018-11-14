@@ -17,7 +17,7 @@ def ArduinoDecodeInteger(arg):
 
 
 # For debuging purposes:
-debug = 1
+debug = 0
 if debug == 1:
     Connect()
     print("Debugging commands.")
