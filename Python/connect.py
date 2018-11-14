@@ -1,10 +1,11 @@
-import serial, time, random
+import os
+import sys
+import time
+import serial
+import random
 
 from converters import *
 
-# TO DO:
-# - PEP8
-# - Grammar
 
 class Arduino():
     # Object used for storing connections.
@@ -16,26 +17,36 @@ class Arduino():
         self.ser = ser
         self.uid = uid
 
+
 connections = []
 UIDS = []
 
+
+def Report(s):
+    print(s)
+    # Ensures messages from different threads appear in the right order
+    sys.stdout.flush()
+    time.sleep(0.01)
+
+
 def Connect():
     # Ports in range of 255 is derived from the maximum value our 8-bit UID.
-    ports = ['COM%s' % (i+1) for i in range(255)]
+    ports = ['COM%s' % (i + 1) for i in range(255)]
     for port in ports:
         try:
             # Definitive timeout needs to be discussed.
             ser = serial.Serial(port, 19200, timeout=3)
             ser.isOpen()
-            print(ser.name + " connected")
-            print("Initializing handshake")
+            Report(ser.name + " connected")
+            Report("Initializing handshake")
             Handshake(ser)
             connections.append(Arduino(ser.name, ser, GenerateUID()))
             pass
         except (OSError, serial.SerialException):
             pass
     if len(connections) == 0:
-        print("No devices connected")
+        Report("No devices connected")
+
 
 def Handshake(ser):
     connected = 0
@@ -51,24 +62,28 @@ def Handshake(ser):
 
         if confirm == b'\xab\xcd\xef':
             ser.write(ArduinoEncodeHex(confirm[::-1].hex()))
-            print("Handshake confirmed")
+            Report("Handshake confirmed")
             connected = 1
 
         if connected == 1:
             break
 
     if connected == 0:
-        print("Handshake failed")
-        print("Closing " + ser.name)
+        Report("Handshake failed")
+        Report("Closing " + ser.name)
         ser.close()
 
 # Temporary placement:
+
+
 def ArduinoEncodeHex(cmd):
     end = "\0"
     return (cmd + end).encode()
 
+
 def ArduinoDecodeHex(cmd):
     return cmd.hex()
+
 
 def GenerateUID():
     while 1:
@@ -77,6 +92,7 @@ def GenerateUID():
             pass
         else:
             UIDS.append(uid)
+            # to_hex() Adds a preceding zero (0)
             return to_hex(uid)[1::]
             break
 
@@ -86,4 +102,4 @@ debug = 0
 if debug == 1:
     Connect()
     for connection in connections:
-        print(connection.port + " " + str(connection.uid))
+        Report(connection.port + " " + str(connection.uid))

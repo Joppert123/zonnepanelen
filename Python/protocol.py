@@ -1,11 +1,12 @@
 from connect import *
 
+
 def Transmit(ser, command):
     ser.write(ArduinoEncodeHex(command))
     response = ser.readline()
     for i in range(2):
         if response == b'':
-            return "No response"
+            Report("Failed")
         else:
             return response
             break
@@ -17,7 +18,7 @@ def ArduinoDecodeInteger(arg):
 
 
 # For debuging purposes:
-debug = 1
+debug = 0
 if debug == 1:
     Connect()
     print("Debugging commands.")
