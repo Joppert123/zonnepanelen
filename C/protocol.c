@@ -130,30 +130,30 @@ void get_commands()
 	if (!strcmp(data, "get_min_light"))
 	{
 		data[0] = '\0';
-		serial_write(get_min_temp());
+		serial_write(get_min_light());
 	}
 	if (!strcmp(data, "get_max_light"))
 	{
 		data[0] = '\0';
-		serial_write(get_max_temp());
+		serial_write(get_max_light());
 	}
 	if (!strcmp(data, "get_light"))
 	{
 		data[0] = '\0';
-		serial_write(get_temp());
+		serial_write(get_light());
 	}
 	
 	// LIGHT SET
 	if (!strcmp(data, "set_min_light"))
 	{
 		data[0] = '\0';
-		set_min_temp(value);
+		set_min_light(value);
 		serial_write(0xAA);
 	}
 	if (!strcmp(data, "set_max_light"))
 	{
 		data[0] = '\0';
-		set_max_temp(value);
+		set_max_light(value);
 		serial_write(0xAA);
 	}
 	
