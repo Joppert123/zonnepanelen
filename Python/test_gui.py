@@ -32,22 +32,22 @@ def TransmitBetter(command, arg=""):
         "get_sunscreen_max_extend",
         "get_sunscreen_status",
         "get_sunscreen_manual",
-        "set_sunscreen_min_extend=",
-        "set_sunscreen_max_extend=",
+        "set_sunscreen_min_extend",
+        "set_sunscreen_max_extend",
         "sunscreen_extend",
         "sunscreen_retract",
-        "set_min_temp=",
-        "set_max_temp=",
+        "set_min_temp",
+        "set_max_temp",
         "get_min_temp",
         "get_max_temp",
         "get_temp",
-        "set_min_light=",
-        "set_max_light=",
+        "set_min_light",
+        "set_max_light",
         "get_min_light",
         "get_max_light",
         "get_light",
         "get_sonar_distance",
-        "set_sunscreen_manual=",
+        "set_sunscreen_manual",
     ]
 
     map = {
@@ -60,8 +60,10 @@ def TransmitBetter(command, arg=""):
         return
 
     if command[:3] == "set":
-        if arg != "" and isinstance(s, str) is True:
+        if arg != "" and isinstance(arg, str) is True:
             command = command + "=" + arg
+            # Debug:
+            print(command)
         else:
             Report("no arg provided")
             return
@@ -96,3 +98,4 @@ def TransmitBetter(command, arg=""):
 print(temp)
 TransmitBetter("get_temp")
 print(temp)
+TransmitBetter("set_max_temp", "50")
