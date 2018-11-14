@@ -30,6 +30,8 @@ void setup()
 	
 	// Tasks
 	sch_add_task(get_commands, 0, 1);
+	sch_add_task(auto_light, 0, 30000);
+	sch_add_task(auto_temp, 0, 40000);
 	
 	// Enable
 	sch_start();

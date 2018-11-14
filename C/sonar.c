@@ -63,12 +63,12 @@ uint8_t get_sonar_distance()
 	
 	if (distance > 200)						// Sensor only works up to 400cm (Sunscreen is 2m)
 	{
-		distance = 200;
+		distance = 205;
 	}
 	
 	if (distance == 0)
 	{
-		distance = 200;
+		distance = 205;
 	}
 	
 	uint8_t convert = distance;				// Converting float to int

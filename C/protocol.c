@@ -70,8 +70,12 @@ void get_commands()
 	if (!strcmp(data, "get_sunscreen_status"))
 	{
 		data[0] = '\0';
-		sprintf(data, "%i", get_sunscreen_status());
-		serial_writeln(data);
+		serial_write(get_sunscreen_status());
+	}
+	if (!strcmp(data, "get_sunscreen_manual"))
+	{
+		data[0] = '\0';
+		serial_write(get_sunscreen_manual());
 	}
 	
 	// SUNSCREEN SET
@@ -97,6 +101,12 @@ void get_commands()
 	{
 		data[0] = '\0';
 		sunscreen_retract();
+		serial_write(0xAA);
+	}
+	if (!strcmp(data, "set_sunscreen_manual"))
+	{
+		data[0] = '\0';
+		set_sunscreen_manual(value);
 		serial_write(0xAA);
 	}
 	
