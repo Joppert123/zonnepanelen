@@ -25,20 +25,28 @@ debug = 1
 if debug == 1:
     Connect()
     print("Debugging commands.")
-    commands = ["get_sunscreen_status",
-                "get_sunscreen_min_extend",
-                "get_sunscreen_max_extend",
-                "set_sunscreen_min_extend",
-                "set_sunscreen_max_extend",
-                "get_temp",
-                "get_min_temp",
-                "get_max_temp",
-                "set_min_temp",
-                "set_max_temp",
-                "get_light",
-                "get_sonar_distance",
-                "sunscreen_extend",
-                "sunscreen_retract"]
+    commands = [
+        "get_sunscreen_min_extend",
+        "get_sunscreen_max_extend",
+        "get_sunscreen_status",
+        "get_sunscreen_manual",
+        "set_sunscreen_min_extend=5",
+        "set_sunscreen_max_extend=200",
+        "sunscreen_extend",
+        "sunscreen_retract",
+        "set_min_temp=15",
+        "set_max_temp=30",
+        "get_min_temp",
+        "get_max_temp",
+        "get_temp",
+        "set_min_light=1",
+        "set_max_light=6",
+        "get_min_light",
+        "get_max_light",
+        "get_light",
+        "get_sonar_distance",
+        "set_sunscreen_manual=0",
+    ]
 
     for command in commands:
         response = int(Transmit(connections[0].ser, command).hex(), 16)
