@@ -3,20 +3,24 @@ def to_bin(dec):
         return '0'
     return to_bin(dec // 2) + str(dec % 2)
 
+
 def to_hex(dec):
     if dec == 0:
         return '0'
     return to_hex(dec // 16) + "0123456789ABCDEF"[dec % 16]
+
 
 def from_bin(bin):
     if bin == "":
         return 0
     return 2 * from_bin(str(bin)[:-1]) + int(str(bin)[-1])
 
+
 def from_dec(dec):
     if dec == "":
         return 0
     return 10 * from_dec(str(dec)[:-1]) + int(str(dec)[-1])
+
 
 def from_hex(hex):
     if hex == "":
@@ -67,9 +71,9 @@ def interpreter(arg):
     data = arg[3:5]
     counter = arg[5]
 
-    map = {"1":"Celcius",
-           "2":"Lux",
-           "3":"Centimeter"}
+    map = {"1": "Celcius",
+           "2": "Lux",
+           "3": "Centimeter"}
 
     print(str(from_hex(data)) + " " + map[sensor])
 
@@ -77,7 +81,7 @@ def interpreter(arg):
 # For debuging purposes:
 debug = 0
 if debug == 1:
-    temp  = "0111b1"
+    temp = "0111b1"
     light = "012ab1"
     sonor = "013ef1"
     interpreter(temp)

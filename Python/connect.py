@@ -75,18 +75,13 @@ def Handshake(ser):
         # "Grote letters zijn cooler" - Lars, 2018
         connect = "AAAAAA"
         ser.write(ArduinoEncodeHex(connect))
-
         confirm = ser.read(6)
-        Report(confirm)
-
         if confirm == b'\xab\xcd\xef':
             ser.write(ArduinoEncodeHex(confirm[::-1].hex()))
             connected = 1
-
         if connected == 1:
             Report("Handshake confirmed")
             break
-
     if connected == 0:
         Report("Handshake failed")
         Report("Closing " + ser.name)

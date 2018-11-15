@@ -61,6 +61,7 @@ def SetModus(modus):
 
 # connections[0].ser.close()
 
+
 # For debuging purposes:
 debug = 0
 if debug == 1:
