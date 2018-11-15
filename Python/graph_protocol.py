@@ -4,20 +4,10 @@ import matplotlib.pyplot as plt
 import matplotlib.animation as animation
 from connect import *
 from protocol import *
-from vraska import *
 
 # Look, I don't want to use globals but for now I fear it is a necessary evil
 thread_flag = None
 previous_flag = None
-
-# Temperature is data[0]
-# Light       is data[1]
-# Ultra Sonor is data[2]
-data = [
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
-    [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
-]
 
 
 def Stop():
@@ -46,8 +36,8 @@ def SetPreviousFlag():
     thread_flag = map[previous_flag]
 
 
-def Task1(ser):
-
+def Task1(connection):
+    ser = connection.ser
     while True:
         global thread_flag
         global data
@@ -59,20 +49,22 @@ def Task1(ser):
             command = "get_temp"
             # response = int(Transmit(ser, command).hex(), 16)
             response = int(Transmit(ser, command).hex(), 16)
-            data[0].insert(0, response)
-            data[0].pop()
+            connection.data[0].insert(0, response)
+            connection.data[0].pop()
+            Report(connection.data)
             thread_flag = '2'
 
         if thread_flag == 'stop':
             break
-        # signals that the inner loop is done
+        elif thread_flag == 'gui':
+            time.sleep(3)
         else:
             thread_flag = '2'
         time.sleep(1)
 
 
-def Task2(ser):
-
+def Task2(connection):
+    ser = connection.ser
     while True:
         global thread_flag
         global data
@@ -84,20 +76,21 @@ def Task2(ser):
             command = "get_light"
             # response = int(Transmit(ser, command).hex(), 16)
             response = int(Transmit(ser, command).hex(), 16)
-            data[1].insert(0, response)
-            data[1].pop()
+            connection.data[1].insert(0, response)
+            connection.data[1].pop()
             thread_flag = '3'
 
         if thread_flag == 'stop':
             break
-        # signals that the inner loop is done
+        elif thread_flag == 'gui':
+            time.sleep(3)
         else:
             thread_flag = '3'
         time.sleep(1)
 
 
-def Task3(ser):
-
+def Task3(connection):
+    ser = connection.ser
     while True:
         global thread_flag
         global data
@@ -109,19 +102,20 @@ def Task3(ser):
             command = "get_sonar_distance"
             # response = int(Transmit(ser, command).hex(), 16)
             response = int(Transmit(ser, command).hex(), 16)
-            data[2].insert(0, response)
-            data[2].pop()
+            connection.data[2].insert(0, response)
+            connection.data[2].pop()
             thread_flag = '1'
 
         if thread_flag == 'stop':
             break
-        # signals that the inner loop is done
+        elif thread_flag == 'gui':
+            time.sleep(3)
         else:
             thread_flag = '1'
         time.sleep(1)
 
 
-def Graph():
+def Graph(connection):
     fig = plt.figure()
     ax1 = fig.add_subplot(1, 1, 1)
 
@@ -130,7 +124,7 @@ def Graph():
     def animate(i):
         global data
         xar = [1, 2, 3, 4, 5, 6, 7, 8, 9, 10]
-        yar = data[2]
+        yar = connection.data[2]
         ax1.clear()
         ax1.plot(xar, yar)
     ani = animation.FuncAnimation(fig, animate, interval=1000)
@@ -140,21 +134,26 @@ def Graph():
 
 def Main():
     Connect()
+    # If no devices connected stop
     try:
-        ser = connections[0].ser
+        connection = connections[0]
     except IndexError:
         return
 
     t1 = threading.Thread(target=Task1,
-                          args=[ser],
+                          args=[connection],
                           daemon=True,
                           )
     t2 = threading.Thread(target=Task2,
-                          args=[ser],
+                          args=[connection],
                           daemon=True,
                           )
     t3 = threading.Thread(target=Task3,
-                          args=[ser],
+                          args=[connection],
+                          daemon=True,
+                          )
+    t4 = threading.Thread(target=Graph,
+                          args=[connection],
                           daemon=True,
                           )
 
@@ -164,30 +163,20 @@ def Main():
     time.sleep(1)
     t3.start()
     time.sleep(1)
-
+    # Set thread_flag to start plotting
     Start()
-
-    t4 = threading.Thread(target=Graph,
-                          args=[],
-                          daemon=True,
-                          )
-    t4.start()
-
-    # Graph()
+    # Open graph in new thread
+    # t4.start()
 
     # For debuging purposes:
-    # time.sleep(1200)
-    # Stop()
-    # ser.close()
-    while True:
-        Report("Datasets:")
-        Report(data[0])
-        Report(data[1])
-        Report(data[2])
-        Report("\n")
-        time.sleep(10)
+    debug = 0
+    if debug == 1:
+        while True:
+            Report("Datasets:")
+            Report(connection.data)
+            time.sleep(10)
 
 
-if __name__ == '__main__':
-
-    Main()
+# if __name__ == '__main__':
+#
+#     Main()

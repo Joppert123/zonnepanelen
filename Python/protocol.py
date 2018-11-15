@@ -3,12 +3,15 @@ from connect import *
 
 def Transmit(ser, command):
     ser.write(ArduinoEncodeHex(command))
+    time.sleep(0.05)
     response = ser.read(1)
+    time.sleep(0.05)
     for i in range(10):
         if response == b'':
             Report("STERF!")
             time.sleep(3)
             ser.write(ArduinoEncodeHex(command))
+            time.sleep(0.05)
             response = ser.read(1)
         else:
             return response

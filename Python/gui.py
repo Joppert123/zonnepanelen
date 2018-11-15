@@ -1,4 +1,6 @@
 from protocol import *
+from connect import *
+from graph_protocol import *
 
 from tkinter import *
 import tkinter as tk
@@ -9,6 +11,8 @@ from matplotlib.backends.backend_tkagg import FigureCanvasTkAgg, NavigationToolb
 from matplotlib.figure import Figure
 
 # De klasse Pagina is de hoofdklasse van de verschillende 'pagina's' van de Centrale. Er wordt een frame gemaakt wat elke 'pagina' kan gebruiken.
+
+Main()
 
 class Pagina(tk.Frame):
     def __init__(self, args):
@@ -84,7 +88,8 @@ class Temperatuursensor(Pagina):
        # Grafiek maken
        f = Figure(figsize=(5, 5), dpi=100)
        a = f.add_subplot(111)
-       a.plot([1,2,3,4,5,6,7,8],[5,6,1,3,8,9,3,5])
+       connection = connections[0]
+       a.plot([1,2,3,4,5,6,7,8,9,10],connection.data[0])
 
        canvas = FigureCanvasTkAgg(f, self)
        canvas.draw()

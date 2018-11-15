@@ -17,6 +17,26 @@ class Arduino():
         self.ser = ser
         self.uid = uid
 
+        self.temp = None
+        self.light = None
+        self.distance = None
+        self.min_temp = None
+        self.max_temp = None
+        self.min_light = None
+        self.max_light = None
+        self.sunscreen_min = None
+        self.sunscreen_max = None
+        self.sunscreen_status = None
+        self.sunscreen_manual = None
+        # Temperature is data[0]
+        # Light       is data[1]
+        # Ultra Sonor is data[2]
+        self.data = [
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0],
+            [0, 0, 0, 0, 0, 0, 0, 0, 0, 0]
+        ]
+
 
 connections = []
 UIDS = []
