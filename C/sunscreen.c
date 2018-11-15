@@ -103,16 +103,17 @@ void auto_temp()
 	
 	if (auto_lightb)
 	{
-		return;
+		return;			// If closed by other sensor do nothing
 	}
 	
 	if (curr_temp > get_max_temp())
 	{
-		if (get_sunscreen_status() && !manual)
+		// Extend sunscreen when above maximum threshold temp
+		if (!get_sunscreen_status() && !manual)
 		{
-			PORTD &= ~(1 << PORTD5);
-			PORTD |= (1 << PORTD7);
-			auto_tempb = 1;
+			PORTD &= ~(1 << PORTD7);		// Turn RED-LED off
+			PORTD |= (1 << PORTD5);			// Turn GREEN-LED on
+			auto_tempb = 0;
 			return;
 		}
 		
@@ -121,23 +122,16 @@ void auto_temp()
 	
 	if (curr_temp < get_min_temp())
 	{
+		// Retract sunscreen when under minimum threshold temp
 		if (get_sunscreen_status() && !manual)
 		{
-			PORTD &= ~(1 << PORTD5);
-			PORTD |= (1 << PORTD7);
+			PORTD &= ~(1 << PORTD5);		// Turn GREEN-LED off
+			PORTD |= (1 << PORTD7);			// Turn RED-LED on
 			auto_tempb = 1;
 			return;
 		}
 		
 		return;
-	}
-	
-	if (!get_sunscreen_status() && !manual)
-	{
-		PORTD &= ~(1 << PORTD7);
-		PORTD |= (1 << PORTD5);
-		auto_tempb = 0;
-		serial_write(curr_temp);
 	}
 }
 
@@ -147,16 +141,17 @@ void auto_light()
 	
 	if (auto_tempb)
 	{
-		return;
+		return;			// If closed by other sensor do nothing
 	}
 	
 	if (curr_light > get_max_light())
 	{
-		if (get_sunscreen_status() && !manual)
+		// Extend sunscreen when above maximum threshold light
+		if (!get_sunscreen_status() && !manual)
 		{
-			PORTD &= ~(1 << PORTD5);
-			PORTD |= (1 << PORTD7);
-			auto_lightb = 1;
+			PORTD &= ~(1 << PORTD7);		// Turn RED-LED off
+			PORTD |= (1 << PORTD5);			// Turn GREEN-LED on
+			auto_lightb = 0;
 			return;
 		}
 		
@@ -165,23 +160,16 @@ void auto_light()
 	
 	if (curr_light < get_min_light())
 	{
+		// Retract sunscreen when under minimum threshold light
 		if (get_sunscreen_status() && !manual)
 		{
-			PORTD &= ~(1 << PORTD5);
-			PORTD |= (1 << PORTD7);
+			PORTD &= ~(1 << PORTD5);		// Turn GREEN-LED off
+			PORTD |= (1 << PORTD7);			// Turn RED-LED on
 			auto_lightb = 1;
 			return;
 		}
 		
 		return;
-	}
-	
-	if (!get_sunscreen_status() && !manual)
-	{
-		PORTD &= ~(1 << PORTD7);
-		PORTD |= (1 << PORTD5);
-		auto_lightb = 0;
-		serial_write(0x02);
 	}
 }
 
